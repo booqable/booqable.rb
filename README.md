@@ -370,8 +370,6 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/booqab
 
 This library aims to support and is [tested against](https://github.com/booqable/bqbl.rb/actions) the following Ruby versions:
 
-- Ruby 3.0
-- Ruby 3.1
 - Ruby 3.2
 - Ruby 3.3
 - Ruby 3.4
