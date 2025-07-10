@@ -5,6 +5,8 @@ module BQBL
   # relationship population and attribute transformation. Supports multiple
   # JSON libraries including the standard JSON gem, Yajl, and MultiJson.
   #
+  # See: https://github.com/lostisland/sawyer/blob/142c8fd9ee82bc01dd71e1929be0e4fd975fd9ed/lib/sawyer/serializer.rb
+  #
   # @example Basic usage
   #   serializer = BQBL::JsonApiSerializer.any_json
   #   data = { "name" => "Order", "created_at" => Time.now }
