@@ -17,7 +17,7 @@ RSpec.configure do |config|
   config.example_status_persistence_file_path = ".rspec_status"
 
   # Use dots format in CI, documentation format locally
-  config.default_formatter = ENV["CI"] ? "dots" : "documentation"
+  config.default_formatter = ENV["CI"] ? "progress" : "documentation"
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
