@@ -1,4 +1,4 @@
-# BQBL
+# BQBL.rb
 
 Ruby toolkit for the [Booqable API](https://developers.booqable.com/).
 
