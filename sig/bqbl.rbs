@@ -1,0 +1,324 @@
+module BQBL
+  VERSION: String
+
+  # Configuration options for {Client}
+  module Configurable
+    @api_domain: String?
+    @api_endpoint: String?
+    @api_key: String?
+    @api_version: String | Integer?
+    @auto_paginate: bool?
+    @client_id: String?
+    @client_secret: String?
+    @company: String?
+    @connection_options: Hash[Symbol, untyped]?
+    @debug: bool?
+    @default_media_type: String?
+    @middleware: Faraday::RackBuilder?
+    @no_retries: bool?
+    @per_page: Integer?
+    @proxy: String?
+    @read_token: Proc?
+    @redirect_uri: String?
+    @single_use_token: String?
+    @single_use_token_algorithm: String?
+    @single_use_token_company_id: String?
+    @single_use_token_expiration_period: Integer?
+    @single_use_token_private_key: String?
+    @single_use_token_secret: String?
+    @single_use_token_user_id: String?
+    @ssl_verify_mode: Integer?
+    @user_agent: String?
+    @write_token: Proc?
+
+    attr_accessor api_domain: String?
+    attr_accessor api_endpoint: String?
+    attr_accessor api_key: String?
+    attr_accessor api_version: String | Integer?
+    attr_accessor auto_paginate: bool?
+    attr_accessor client_id: String?
+    attr_accessor client_secret: String?
+    attr_accessor company: String?
+    attr_accessor connection_options: Hash[Symbol, untyped]?
+    attr_accessor debug: bool?
+    attr_accessor default_media_type: String?
+    attr_accessor middleware: Faraday::RackBuilder?
+    attr_accessor no_retries: bool?
+    attr_accessor per_page: Integer?
+    attr_accessor proxy: String?
+    attr_accessor read_token: Proc?
+    attr_accessor redirect_uri: String?
+    attr_accessor single_use_token: String?
+    attr_accessor single_use_token_algorithm: String?
+    attr_accessor single_use_token_company_id: String?
+    attr_accessor single_use_token_expiration_period: Integer?
+    attr_accessor single_use_token_private_key: String?
+    attr_accessor single_use_token_secret: String?
+    attr_accessor single_use_token_user_id: String?
+    attr_accessor ssl_verify_mode: Integer?
+    attr_accessor user_agent: String?
+    attr_accessor write_token: Proc?
+
+    module ConfigurableClass
+      def keys: () -> Array[Symbol]
+    end
+
+    extend ConfigurableClass
+
+    def configure: () { (self) -> void } -> void
+    def reset!: () -> self
+    alias setup reset!
+    def same_options?: (Hash[Symbol, untyped] opts) -> bool
+    def debug?: () -> bool
+
+    private
+
+    def api_protocol: () -> String
+    def options: () -> Hash[Symbol, untyped]
+  end
+
+  # Resource-related methods for {BQBL::Client}
+  module Resources
+    RESOURCES_FILE_PATH: String
+    ALL_RESOURCES: Array[String | Hash[String, String]]
+
+    def method_missing: (Symbol method_name, *untyped args) -> ResourceProxy
+  end
+
+  # Authentication methods for {BQBL::Client}
+  module Auth
+    def authenticate_with_code: (String code) -> void
+    def inject_auth_middleware: (Faraday::Builder builder) -> void
+    def oauth_client: () -> OAuthClient?
+    def oauth_authenticated?: () -> bool
+    def api_key_authenticated?: () -> bool
+    def single_use_token_authenticated?: () -> bool
+  end
+
+  # HTTP request methods for {BQBL::Client}
+  module HTTP
+    CONVENIENCE_HEADERS: Set[Symbol]
+
+    @last_response: Sawyer::Response?
+    @faraday: Faraday::Connection?
+    @faraday_builder: Faraday::RackBuilder?
+    @agent: Sawyer::Agent?
+    @logger: Logger?
+
+    def get: (String url, ?Hash[Symbol, untyped] options) -> Sawyer::Resource
+    def post: (String url, ?Hash[Symbol, untyped] options) -> Sawyer::Resource
+    def put: (String url, ?Hash[Symbol, untyped] options) -> Sawyer::Resource
+    def patch: (String url, ?Hash[Symbol, untyped] options) -> Sawyer::Resource
+    def delete: (String url, ?Hash[Symbol, untyped] options) -> Sawyer::Resource
+    def head: (String url, ?Hash[Symbol, untyped] options) -> Sawyer::Resource
+    def request: (Symbol method, String path, untyped data, ?Hash[Symbol, untyped] options) -> Sawyer::Resource
+    def normalized_path: (String path) -> String
+    def last_response: () -> Sawyer::Response?
+    def paginate: (String url, ?Hash[Symbol, untyped] options) -> Array[untyped]
+    def rate_limit: () -> RateLimit
+    def faraday: () -> Faraday::Connection
+    def default_headers: () -> Hash[Symbol, String]
+    def faraday_options: () -> Hash[Symbol, untyped]
+    def faraday_builder: () -> Faraday::RackBuilder
+    def agent: () -> Sawyer::Agent
+    def logger: () -> Logger?
+    def sawyer_options: () -> Hash[Symbol, untyped]
+    def sawyer_serializer: () -> JsonApiSerializer
+    def last_response_body: () -> Hash[Symbol, untyped]?
+    def parse_options_with_convenience_headers: (Hash[Symbol, untyped] options) -> Hash[Symbol, untyped]
+    def response_data_with_correct_encoding: (Sawyer::Response response) -> untyped
+    def api_endpoint: () -> String
+  end
+
+  # Client for the Booqable API
+  class Client
+    include Configurable
+    include Resources
+    include Auth
+    include HTTP
+
+    SECRETS: Array[String]
+
+    def initialize: (?Hash[Symbol, untyped] options) -> void
+    def inspect: () -> String
+  end
+
+  # Generic resource proxy for API collections
+  class ResourceProxy
+    @client: Client
+    @resource: String
+
+    def initialize: (Client client, String | Symbol resource_name) -> void
+    def list: (?Hash[Symbol, untyped] params) -> Array[untyped]
+    def find: (String | Integer id, ?Hash[Symbol, untyped] params) -> Hash[Symbol, untyped]
+    def create: (?Hash[Symbol, untyped] attrs) -> Hash[Symbol, untyped]
+    def update: (String | Integer id, ?Hash[Symbol, untyped] attrs) -> Hash[Symbol, untyped]
+
+    private
+
+    attr_reader client: Client
+
+    def request: (*untyped args) -> untyped
+    def paginate: (*untyped args) -> untyped
+  end
+
+  # OAuth2 client for Booqable API authentication
+  class OAuthClient
+    TOKEN_ENDPOINT: String
+
+    @client: OAuth2::Client
+    @redirect_uri: String
+
+    def initialize: (base_url: String, client_id: String, client_secret: String, redirect_uri: String) -> void
+    def get_token_from_code: (String code, ?scope: String) -> OAuth2::AccessToken
+  end
+
+  # Rate limit information from API responses
+  class RateLimit < Struct[Integer?]
+    attr_accessor limit: Integer?
+    attr_accessor remaining: Integer?
+    attr_accessor resets_in: Integer?
+
+    def self.from_response: (untyped response) -> RateLimit
+  end
+
+  # Custom error class for rescuing from all Booqable errors
+  class Error < StandardError
+    attr_reader context: RateLimit?
+
+    @response: Hash[Symbol, untyped]?
+    @data: untyped
+
+    def self.from_response: (Hash[Symbol, untyped] response) -> nil
+    def self.error_class_from_response: (Hash[Symbol, untyped] response) -> Error?
+    def self.error_for_400: (String body) -> singleton(Error)
+    def self.error_for_402: (String body) -> singleton(Error)
+    def self.error_for_404: (String body) -> singleton(Error)
+    def self.error_for_422: (String body) -> singleton(Error)
+    def self.error_for_503: (String body) -> singleton(Error)
+
+    def initialize: (?Hash[Symbol, untyped]? response) -> void
+    def build_error_context: () -> void
+    def errors: () -> Array[Hash[Symbol, untyped]]
+    def response_status: () -> Integer
+    def response_headers: () -> Hash[Symbol, untyped]
+    def response_body: () -> String
+
+    private
+
+    def data: () -> untyped
+    def response_message: () -> String?
+    def response_error: () -> String?
+    def response_error_summary: () -> String?
+    def build_error_message: () -> String?
+    def redact_url: (String url_string) -> String
+  end
+
+  # Error classes
+  class ClientError < Error; end
+  class BadRequest < ClientError; end
+  class ReadOnlyAttribute < ClientError; end
+  class UnknownAttribute < ClientError; end
+  class FieldsInWrongFormat < ClientError; end
+  class ExtraFieldsInWrongFormat < ClientError; end
+  class PageShouldBeAnObject < ClientError; end
+  class FailedTypecasting < ClientError; end
+  class InvalidFilter < ClientError; end
+  class RequiredFilter < ClientError; end
+  class Unauthorized < ClientError; end
+  class PaymentRequired < ClientError; end
+  class FeatureNotEnabled < PaymentRequired; end
+  class TrialExpired < PaymentRequired; end
+  class Forbidden < ClientError; end
+  class TooManyRequests < Forbidden; end
+  class NotFound < ClientError; end
+  class CompanyNotFound < NotFound; end
+  class MethodNotAllowed < ClientError; end
+  class NotAcceptable < ClientError; end
+  class Conflict < ClientError; end
+  class Deprecated < ClientError; end
+  class UnsupportedMediaType < ClientError; end
+  class Locked < ClientError; end
+  class UnprocessableEntity < ClientError; end
+  class InvalidDateTimeFormat < UnprocessableEntity; end
+  class InvalidDateFormat < UnprocessableEntity; end
+  class ServerError < Error; end
+  class InternalServerError < ServerError; end
+  class NotImplemented < ServerError; end
+  class BadGateway < ServerError; end
+  class ServiceUnavailable < ServerError; end
+  class ReadOnlyMode < ServerError; end
+  class ConfigArgumentError < ArgumentError; end
+  class CompanyRequired < ArgumentError; end
+  class SingleUseTokenCompanyIdRequired < ArgumentError; end
+  class SingleUseTokenUserIdRequired < ArgumentError; end
+  class SingleUseTokenAlgorithmRequired < ConfigArgumentError; end
+  class PrivateKeyOrSecretRequired < ConfigArgumentError; end
+  class UnsupportedAPIVersion < ConfigArgumentError; end
+  class RequiredAuthParamMissing < ArgumentError; end
+
+  RATE_LIMITED_ERRORS: Array[singleton(Error)]
+
+  # JSON API serializer
+  class JsonApiSerializer
+    def self.any_json: () -> JsonApiSerializer
+    def decode: (String body) -> Hash[Symbol, untyped]
+    def encode: (Hash[Symbol, untyped] data) -> String
+  end
+
+  # Default configuration options
+  module Default
+    USER_AGENT: String
+    MEDIA_TYPE: String
+    RETRY_OPTIONS: Hash[Symbol, untyped]
+    MIDDLEWARE: Faraday::RackBuilder
+
+    module DefaultClass
+      def options: () -> Hash[Symbol, untyped]
+      def api_domain: () -> String
+      def api_version: () -> Integer
+      def api_endpoint: () -> String?
+      def auto_paginate: () -> String?
+      def client_id: () -> String?
+      def client_secret: () -> String?
+      def company: () -> String?
+      def redirect_uri: () -> String?
+      def connection_options: () -> Hash[Symbol, untyped]?
+      def default_media_type: () -> String
+      def middleware: () -> Faraday::RackBuilder
+      def per_page: () -> Integer?
+      def proxy: () -> String?
+      def ssl_verify_mode: () -> Integer
+      def user_agent: () -> String
+      def read_token: () -> Proc
+      def write_token: () -> Proc
+      def api_key: () -> String?
+      def single_use_token: () -> String?
+      def single_use_token_algorithm: () -> String?
+      def single_use_token_secret: () -> String?
+      def single_use_token_private_key: () -> String?
+      def single_use_token_expiration_period: () -> Integer
+      def single_use_token_company_id: () -> String?
+      def single_use_token_user_id: () -> String?
+      def debug: () -> bool
+      def no_retries: () -> bool
+    end
+
+    extend DefaultClass
+  end
+
+  # Module methods
+  def self.client: () -> Client
+  def self.configure: () { (self) -> void } -> void
+  def self.reset!: () -> self
+  alias self.setup self.reset!
+  def self.same_options?: (Hash[Symbol, untyped] opts) -> bool
+  def self.debug?: () -> bool
+
+  private
+
+  def self.respond_to_missing?: (Symbol method_name, ?bool include_private) -> bool
+  def self.method_missing: (Symbol method_name, *untyped args) ?{ (*untyped) -> untyped } -> untyped
+
+  include Configurable
+end

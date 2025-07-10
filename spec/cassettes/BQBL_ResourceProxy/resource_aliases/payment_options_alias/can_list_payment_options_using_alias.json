@@ -1,0 +1,108 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "get",
+        "uri": "http://<BOOQABLE_COMPANY>.booqable.test/api/4/app_payment_options?page%5Bnumber%5D=1&page%5Bsize%5D=25&stats%5Btotal%5D=count",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "Accept": [
+            "application/vnd.api+json"
+          ],
+          "Content-Type": [
+            "application/vnd.api+json"
+          ],
+          "User-Agent": [
+            "BQBL Ruby Gem 0.1.0"
+          ],
+          "Authorization": [
+            "Bearer <BOOQABLE_API_KEY>"
+          ],
+          "Accept-Encoding": [
+            "gzip;q=1.0,deflate;q=0.6,identity;q=0.3"
+          ]
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": "OK"
+        },
+        "headers": {
+          "Access-Control-Allow-Credentials": [
+            "false"
+          ],
+          "Cache-Control": [
+            "max-age=0, private, must-revalidate"
+          ],
+          "Client-Version": [
+            "336d5ebc5436534e61d16e63ddfca327"
+          ],
+          "Content-Length": [
+            "517"
+          ],
+          "Content-Type": [
+            "application/vnd.api+json; charset=utf-8"
+          ],
+          "Etag": [
+            "W/\"39400aedcf3338c8fe0e3b1fee6f051c\""
+          ],
+          "Referrer-Policy": [
+            "strict-origin-when-cross-origin"
+          ],
+          "Server-Timing": [
+            "sql.active_record;dur=9.87, instantiation.active_record;dur=0.30, start_processing.action_controller;dur=0.00, adapter_operation.flipper;dur=0.90, cache_read.active_support;dur=0.01, cache_write.active_support;dur=0.05, start_transaction.active_record;dur=0.00, transaction.active_record;dur=1.68, enqueue.active_job;dur=2.49, resolve.graphiti;dur=2.29, render.graphiti;dur=1.34, flush_debug.graphiti;dur=0.18, process_action.action_controller;dur=92.14"
+          ],
+          "Session-Expiry-Token": [
+            "17b70851ea5e258b171eb7a337c50067"
+          ],
+          "Set-Cookie": [
+            "<SESSION_COOKIE>"
+          ],
+          "Vary": [
+            "Accept-Encoding, Origin"
+          ],
+          "X-Content-Type-Options": [
+            "nosniff"
+          ],
+          "X-Frame-Options": [
+            "SAMEORIGIN"
+          ],
+          "X-Permitted-Cross-Domain-Policies": [
+            "none"
+          ],
+          "X-Ratelimit-Limit": [
+            "50"
+          ],
+          "X-Ratelimit-Period": [
+            "60"
+          ],
+          "X-Ratelimit-Remaining": [
+            "14"
+          ],
+          "X-Request-Id": [
+            "a1cd1670-81b5-4c96-b290-45e42777471e"
+          ],
+          "X-Runtime": [
+            "0.139996"
+          ],
+          "X-Xss-Protection": [
+            "0"
+          ],
+          "Date": [
+            "Wed, 09 Jul 2025 12:28:44 GMT"
+          ]
+        },
+        "body": {
+          "encoding": "ASCII-8BIT",
+          "string": "{\"data\":[{\"id\":\"6464ec68-f909-4b6c-837e-e8834a39b848\",\"type\":\"app_payment_options\",\"attributes\":{\"created_at\":\"2025-06-25T14:37:29.099988+00:00\",\"updated_at\":\"2025-06-26T11:09:27.587132+00:00\",\"name\":\"PayPal\",\"identifier\":\"paypal\",\"charge_url\":\"http://paypal.test:3102/paypal/charge\",\"authorization_url\":\"http://paypal.test:3102/paypal/auth\",\"refund_url\":\"http://paypal.test:3102/paypal/refund\",\"app_subscription_id\":\"4667eeab-70cd-4ef1-9bcf-225cd576fd63\"},\"relationships\":{}}],\"meta\":{\"stats\":{\"total\":{\"count\":1}}}}"
+        }
+      },
+      "recorded_at": "Wed, 09 Jul 2025 12:28:44 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.3.1"
+}

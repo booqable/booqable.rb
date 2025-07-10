@@ -1,0 +1,99 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "get",
+        "uri": "http://<BOOQABLE_COMPANY>.booqable.test/api/4/orders/invalid-id",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "Accept": [
+            "application/vnd.api+json"
+          ],
+          "Content-Type": [
+            "application/vnd.api+json"
+          ],
+          "User-Agent": [
+            "BQBL Ruby Gem 0.1.0"
+          ],
+          "Authorization": [
+            "Bearer <BOOQABLE_API_KEY>"
+          ],
+          "Accept-Encoding": [
+            "gzip;q=1.0,deflate;q=0.6,identity;q=0.3"
+          ]
+        }
+      },
+      "response": {
+        "status": {
+          "code": 404,
+          "message": "Not Found"
+        },
+        "headers": {
+          "Access-Control-Allow-Credentials": [
+            "false"
+          ],
+          "Cache-Control": [
+            "no-cache"
+          ],
+          "Content-Type": [
+            "application/vnd.api+json; charset=utf-8"
+          ],
+          "Referrer-Policy": [
+            "strict-origin-when-cross-origin"
+          ],
+          "Server-Timing": [
+            "sql.active_record;dur=8.61, instantiation.active_record;dur=0.26, start_processing.action_controller;dur=0.00, adapter_operation.flipper;dur=1.21, cache_read.active_support;dur=0.02, cache_write.active_support;dur=0.05, start_transaction.active_record;dur=0.00, transaction.active_record;dur=1.95, enqueue.active_job;dur=0.95, resolve.graphiti;dur=1.50, flush_debug.graphiti;dur=0.11, process_action.action_controller;dur=87.32"
+          ],
+          "Set-Cookie": [
+            "<SESSION_COOKIE>"
+          ],
+          "Vary": [
+            "Accept-Encoding, Origin"
+          ],
+          "X-Content-Type-Options": [
+            "nosniff"
+          ],
+          "X-Frame-Options": [
+            "SAMEORIGIN"
+          ],
+          "X-Permitted-Cross-Domain-Policies": [
+            "none"
+          ],
+          "X-Ratelimit-Limit": [
+            "50"
+          ],
+          "X-Ratelimit-Period": [
+            "60"
+          ],
+          "X-Ratelimit-Remaining": [
+            "9"
+          ],
+          "X-Request-Id": [
+            "71660a43-817f-400f-a786-996af79c53fb"
+          ],
+          "X-Runtime": [
+            "0.128526"
+          ],
+          "X-Xss-Protection": [
+            "0"
+          ],
+          "Date": [
+            "Wed, 09 Jul 2025 12:28:45 GMT"
+          ],
+          "Transfer-Encoding": [
+            "chunked"
+          ]
+        },
+        "body": {
+          "encoding": "ASCII-8BIT",
+          "string": "{\"errors\":[{\"code\":\"resources_not_found\",\"status\":\"404\",\"title\":\"Resource(s) not found\"}]}"
+        }
+      },
+      "recorded_at": "Wed, 09 Jul 2025 12:28:45 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.3.1"
+}

@@ -1,0 +1,108 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "post",
+        "uri": "http://<BOOQABLE_COMPANY>.booqable.test/api/4/orders",
+        "body": {
+          "encoding": "UTF-8",
+          "string": "{\"data\":{\"type\":\"orders\",\"attributes\":{\"starts_at\":\"2024-01-01T00:00:00Z\",\"stops_at\":\"2024-01-02T00:00:00Z\"}},\"headers\":{\"accept\":\"application/vnd.api+json\",\"content_type\":\"application/vnd.api+json\",\"user_agent\":\"BQBL Ruby Gem 0.1.0\"}}"
+        },
+        "headers": {
+          "Accept": [
+            "application/vnd.api+json"
+          ],
+          "Content-Type": [
+            "application/vnd.api+json"
+          ],
+          "User-Agent": [
+            "BQBL Ruby Gem 0.1.0"
+          ],
+          "Authorization": [
+            "Bearer <BOOQABLE_API_KEY>"
+          ],
+          "Accept-Encoding": [
+            "gzip;q=1.0,deflate;q=0.6,identity;q=0.3"
+          ]
+        }
+      },
+      "response": {
+        "status": {
+          "code": 201,
+          "message": "Created"
+        },
+        "headers": {
+          "Access-Control-Allow-Credentials": [
+            "false"
+          ],
+          "Cache-Control": [
+            "max-age=0, private, must-revalidate"
+          ],
+          "Client-Version": [
+            "336d5ebc5436534e61d16e63ddfca327"
+          ],
+          "Content-Length": [
+            "1667"
+          ],
+          "Content-Type": [
+            "application/vnd.api+json; charset=utf-8"
+          ],
+          "Etag": [
+            "W/\"27f727aef8d36f4c2ae523aea9d4bcb0\""
+          ],
+          "Referrer-Policy": [
+            "strict-origin-when-cross-origin"
+          ],
+          "Server-Timing": [
+            "sql.active_record;dur=36.86, instantiation.active_record;dur=0.62, start_processing.action_controller;dur=0.00, adapter_operation.flipper;dur=3.91, cache_read.active_support;dur=0.01, cache_write.active_support;dur=0.13, start_transaction.active_record;dur=0.01, transaction.active_record;dur=43.34, enqueue.active_job;dur=0.74, render.graphiti;dur=1.08, flush_debug.graphiti;dur=0.10, process_action.action_controller;dur=146.04"
+          ],
+          "Session-Expiry-Token": [
+            "17b70851ea5e258b171eb7a337c50067"
+          ],
+          "Set-Cookie": [
+            "<SESSION_COOKIE>"
+          ],
+          "Vary": [
+            "Accept-Encoding, Origin"
+          ],
+          "X-Content-Type-Options": [
+            "nosniff"
+          ],
+          "X-Frame-Options": [
+            "SAMEORIGIN"
+          ],
+          "X-Permitted-Cross-Domain-Policies": [
+            "none"
+          ],
+          "X-Ratelimit-Limit": [
+            "50"
+          ],
+          "X-Ratelimit-Period": [
+            "60"
+          ],
+          "X-Ratelimit-Remaining": [
+            "32"
+          ],
+          "X-Request-Id": [
+            "27bf2b07-c9dc-471d-9be2-0acc055882ab"
+          ],
+          "X-Runtime": [
+            "0.184019"
+          ],
+          "X-Xss-Protection": [
+            "0"
+          ],
+          "Date": [
+            "Wed, 09 Jul 2025 12:28:41 GMT"
+          ]
+        },
+        "body": {
+          "encoding": "ASCII-8BIT",
+          "string": "{\"data\":{\"id\":\"4092264f-9660-435c-bcdc-cb714c6e1aea\",\"type\":\"orders\",\"attributes\":{\"created_at\":\"2025-07-09T12:28:41.335930+00:00\",\"updated_at\":\"2025-07-09T12:28:41.345176+00:00\",\"number\":null,\"status\":\"new\",\"statuses\":[\"new\"],\"status_counts\":{\"new\":0,\"concept\":0,\"reserved\":0,\"started\":0,\"stopped\":0},\"starts_at\":\"2024-01-01T00:00:00.000000+00:00\",\"stops_at\":\"2024-01-02T00:00:00.000000+00:00\",\"deposit_type\":\"percentage\",\"deposit_value\":100.0,\"entirely_started\":true,\"entirely_stopped\":false,\"location_shortage\":false,\"shortage\":false,\"payment_status\":\"paid\",\"override_period_restrictions\":false,\"has_signed_contract\":false,\"item_count\":0,\"tag_list\":[],\"properties\":{\"delivery_address\":null,\"billing_address\":null},\"amount_in_cents\":0,\"amount_paid_in_cents\":0,\"amount_to_be_paid_in_cents\":null,\"deposit_in_cents\":0,\"deposit_held_in_cents\":0,\"deposit_paid_in_cents\":0,\"deposit_to_be_paid_in_cents\":null,\"deposit_refunded_in_cents\":0,\"deposit_to_refund_in_cents\":0,\"total_in_cents\":0,\"total_paid_in_cents\":0,\"total_to_be_paid_in_cents\":0,\"total_discount_in_cents\":0,\"coupon_discount_in_cents\":0,\"discount_in_cents\":0,\"grand_total_in_cents\":0,\"grand_total_with_tax_in_cents\":0,\"paid_in_cents\":0,\"price_in_cents\":0,\"tax_in_cents\":0,\"to_be_paid_in_cents\":0,\"discount_type\":\"percentage\",\"discount_percentage\":0.0,\"billing_address_property_id\":null,\"delivery_address_property_id\":null,\"fulfillment_type\":\"pickup\",\"delivery_address\":null,\"customer_id\":null,\"tax_region_id\":null,\"coupon_id\":null,\"start_location_id\":\"0ddaa18d-a229-4cfd-a298-2020de1afdad\",\"stop_location_id\":\"0ddaa18d-a229-4cfd-a298-2020de1afdad\",\"order_delivery_rate_id\":null},\"relationships\":{}},\"meta\":{}}"
+        }
+      },
+      "recorded_at": "Wed, 09 Jul 2025 12:28:41 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.3.1"
+}
