@@ -86,7 +86,7 @@ module BQBL
         def generate_payload(env)
           data = generate_data(env)
 
-          request_id = SecureRandom.uuid_v4
+          request_id = SecureRandom.respond_to?(:uuid_v4) ? SecureRandom.uuid_v4 : SecureRandom.uuid
 
           {
             alg: @alg,
