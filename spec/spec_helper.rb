@@ -16,6 +16,9 @@ RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = ".rspec_status"
 
+  # Use dots format in CI, documentation format locally
+  config.default_formatter = ENV["CI"] ? "dots" : "documentation"
+
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
