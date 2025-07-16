@@ -35,7 +35,7 @@ module BQBL
         client_id,
         client_secret,
         site: base_url,
-        token_url: TOKEN_ENDPOINT
+        token_url: base_url + TOKEN_ENDPOINT,
       )
       @redirect_uri = redirect_uri
     end
