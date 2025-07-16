@@ -22,6 +22,19 @@ describe BQBL::OAuthClient do
         expect(BQBL::OAuthClient::TOKEN_ENDPOINT).to eq("/oauth/token")
       end
 
+      it "constructs token_url with base_url prepended" do
+        oauth_client = BQBL::OAuthClient.new(
+          base_url: test_base_url,
+          client_id: test_client_id,
+          client_secret: test_client_secret,
+          redirect_uri: test_redirect_uri
+        )
+
+        # Access the underlying OAuth2::Client instance
+        oauth2_client = oauth_client.instance_variable_get(:@client)
+        expect(oauth2_client.options[:token_url]).to eq("#{test_base_url}/oauth/token")
+      end
+
       describe "#get_token_from_code", :vcr do
         it "exchanges authorization code for access token" do
           # Mock the OAuth2 client response
