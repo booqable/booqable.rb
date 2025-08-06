@@ -4,7 +4,7 @@ describe BQBL::OAuthClient do
   describe "OAuth client functionality" do
     let(:test_redirect_uri) { "https://example.com/callback" }
     let(:test_code) { "test_authorization_code" }
-    let(:test_api_endpoint) { "https://demo.booqable.test" }
+    let(:test_api_endpoint) { "https://demo.booqable.test/api/4" }
 
     describe "BQBL::OAuthClient" do
       it "can be instantiated with required parameters" do
@@ -316,7 +316,7 @@ describe BQBL::OAuthClient do
           ->(env) { env },
           client_id: test_client_id,
           client_secret: test_client_secret,
-          api_endpoint: "http://demo.booqable.test/api/4/oauth/token",
+          api_endpoint: test_api_endpoint,
           redirect_uri: test_redirect_uri,
           read_token: client.instance_variable_get(:@read_token),
           write_token: client.instance_variable_get(:@write_token)
@@ -371,7 +371,7 @@ describe BQBL::OAuthClient do
           ->(env) { env },
           client_id: test_client_id,
           client_secret: test_client_secret,
-          api_endpoint: "http://demo.booqable.test/api/4/ouath/token",
+          api_endpoint: test_api_endpoint,
           redirect_uri: test_redirect_uri,
           read_token: client.instance_variable_get(:@read_token),
           write_token: client.instance_variable_get(:@write_token)
