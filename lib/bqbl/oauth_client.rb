@@ -30,12 +30,12 @@ module BQBL
     # @param client_id [String] OAuth2 client identifier
     # @param client_secret [String] OAuth2 client secret
     # @param redirect_uri [String] OAuth2 redirect URI for authorization callback
-    def initialize(base_url:, client_id:, client_secret:, redirect_uri:)
+    def initialize(api_endpoint:, client_id:, client_secret:, redirect_uri: nil)
       @client = OAuth2::Client.new(
         client_id,
         client_secret,
-        site: base_url,
-        token_url: TOKEN_ENDPOINT
+        site: api_endpoint,
+        token_url: api_endpoint + TOKEN_ENDPOINT,
       )
       @redirect_uri = redirect_uri
     end
@@ -59,6 +59,14 @@ module BQBL
                                   redirect_uri: @redirect_uri,
                                   scope: scope,
                                   grant_type: "authorization_code")
+    end
+
+    # Create an access token from a hash.
+    #
+    # @param hash [Hash] Hash containing access token data.
+    # @return [OAuth2::AccessToken] Access token object created from the hash.
+    def get_access_token_from_hash(hash)
+      OAuth2::AccessToken.from_hash(@client, hash)
     end
   end
 end

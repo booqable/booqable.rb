@@ -1,5 +1,6 @@
 [
   { "app_carriers": "carriers" },
+  { "app_subscriptions": "subscriptions" },
   { "app_payment_options": "payment_options" },
   "authentication_methods",
   "barcodes",

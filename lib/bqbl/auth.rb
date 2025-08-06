@@ -54,7 +54,7 @@ module BQBL
       builder.use BQBL::Middleware::Auth::OAuth, {
         client_id: client_id,
         client_secret: client_secret,
-        base_url: api_endpoint,
+        api_endpoint: api_endpoint,
         redirect_uri: redirect_uri,
         read_token: read_token,
         write_token: write_token
@@ -83,7 +83,7 @@ module BQBL
     # @return [OAuthClient, nil] OAuth client instance or nil if not configured
     def oauth_client
       @oauth_client ||= OAuthClient.new(
-        base_url: api_endpoint,
+        api_endpoint: api_endpoint,
         client_id: @client_id,
         client_secret: @client_secret,
         redirect_uri: @redirect_uri

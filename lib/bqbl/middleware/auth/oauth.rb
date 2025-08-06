@@ -11,21 +11,17 @@ module BQBL
       #   builder.use BQBL::Middleware::Auth::OAuth,
       #     client_id: "your_client_id",
       #     client_secret: "your_client_secret",
-      #     base_url: "https://company.booqable.com",
+      #     api_endpoint: "https://company.booqable.com/api/v4/oauth/token",
       #     read_token: -> { stored_token },
       #     write_token: ->(token) { store_token(token) }
       class OAuth < Base
-        # Default OAuth token endpoint
-        TOKEN_ENDPOINT = "/api/boomerang/oauth/token"
-
         # Initialize the OAuth authentication middleware
         #
         # @param app [#call] The next middleware in the Faraday stack
         # @param options [Hash] Configuration options
         # @option options [String] :client_id OAuth client ID
         # @option options [String] :client_secret OAuth client secret
-        # @option options [String] :base_url Base URL for the OAuth provider
-        # @option options [String] :token_url Token endpoint URL (defaults to TOKEN_ENDPOINT)
+        # @option options [String] :api_endpoint API endpoint URL for the OAuth provider
         # @option options [Proc] :read_token Proc to read stored token
         # @option options [Proc] :write_token Proc to store new token
         # @raise [KeyError] If required options are not provided
@@ -34,16 +30,14 @@ module BQBL
 
           @client_id = options.fetch(:client_id)
           @client_secret = options.fetch(:client_secret)
-          @base_url = options.fetch(:base_url)
-          @token_url = options.fetch(:token_url, TOKEN_ENDPOINT)
+          @api_endpoint = options.fetch(:api_endpoint)
           @read_token = options.fetch(:read_token)
           @write_token = options.fetch(:write_token)
 
-          @client = OAuth2::Client.new(
-            @client_id,
-            @client_secret,
-            site: @base_url,
-            token_url: @token_url
+          @client = OAuthClient.new(
+            client_id: @client_id,
+            client_secret: @client_secret,
+            api_endpoint: @api_endpoint,
           )
         end
 
@@ -56,7 +50,7 @@ module BQBL
         # @param env [Faraday::Env] The request environment
         # @return [Faraday::Response] The response from the next middleware
         def call(env)
-          @token = OAuth2::AccessToken.from_hash(@client, @read_token.call)
+          @token = @client.get_access_token_from_hash(@read_token.call)
 
           if @token.expired?
             @token = refresh_token!
