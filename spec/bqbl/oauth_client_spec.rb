@@ -4,12 +4,12 @@ describe BQBL::OAuthClient do
   describe "OAuth client functionality" do
     let(:test_redirect_uri) { "https://example.com/callback" }
     let(:test_code) { "test_authorization_code" }
-    let(:test_base_url) { "https://demo.booqable.test" }
+    let(:test_api_endpoint) { "https://demo.booqable.test" }
 
     describe "BQBL::OAuthClient" do
       it "can be instantiated with required parameters" do
         oauth_client = BQBL::OAuthClient.new(
-          base_url: test_base_url,
+          api_endpoint: test_api_endpoint,
           client_id: test_client_id,
           client_secret: test_client_secret,
           redirect_uri: test_redirect_uri
@@ -22,9 +22,9 @@ describe BQBL::OAuthClient do
         expect(BQBL::OAuthClient::TOKEN_ENDPOINT).to eq("/oauth/token")
       end
 
-      it "constructs token_url with base_url prepended" do
+      it "constructs token_url with api_endpoint prepended" do
         oauth_client = BQBL::OAuthClient.new(
-          base_url: test_base_url,
+          api_endpoint: test_api_endpoint,
           client_id: test_client_id,
           client_secret: test_client_secret,
           redirect_uri: test_redirect_uri
@@ -32,7 +32,7 @@ describe BQBL::OAuthClient do
 
         # Access the underlying OAuth2::Client instance
         oauth2_client = oauth_client.instance_variable_get(:@client)
-        expect(oauth2_client.options[:token_url]).to eq("#{test_base_url}/oauth/token")
+        expect(oauth2_client.options[:token_url]).to eq("#{test_api_endpoint}/oauth/token")
       end
 
       describe "#get_token_from_code", :vcr do
@@ -56,7 +56,7 @@ describe BQBL::OAuthClient do
           allow(mock_auth_code).to receive(:get_token).and_return(mock_token)
 
           oauth_client = BQBL::OAuthClient.new(
-            base_url: test_base_url,
+            api_endpoint: test_api_endpoint,
             client_id: test_client_id,
             client_secret: test_client_secret,
             redirect_uri: test_redirect_uri
@@ -85,7 +85,7 @@ describe BQBL::OAuthClient do
           )
 
           oauth_client = BQBL::OAuthClient.new(
-            base_url: test_base_url,
+            api_endpoint: test_api_endpoint,
             client_id: test_client_id,
             client_secret: test_client_secret,
             redirect_uri: test_redirect_uri
@@ -109,7 +109,7 @@ describe BQBL::OAuthClient do
           )
 
           oauth_client = BQBL::OAuthClient.new(
-            base_url: test_base_url,
+            api_endpoint: test_api_endpoint,
             client_id: test_client_id,
             client_secret: test_client_secret,
             redirect_uri: test_redirect_uri
@@ -316,7 +316,7 @@ describe BQBL::OAuthClient do
           ->(env) { env },
           client_id: test_client_id,
           client_secret: test_client_secret,
-          base_url: "http://demo.booqable.test",
+          api_endpoint: "http://demo.booqable.test/api/4/oauth/token",
           redirect_uri: test_redirect_uri,
           read_token: client.instance_variable_get(:@read_token),
           write_token: client.instance_variable_get(:@write_token)
@@ -371,7 +371,7 @@ describe BQBL::OAuthClient do
           ->(env) { env },
           client_id: test_client_id,
           client_secret: test_client_secret,
-          base_url: "http://demo.booqable.test",
+          api_endpoint: "http://demo.booqable.test/api/4/ouath/token",
           redirect_uri: test_redirect_uri,
           read_token: client.instance_variable_get(:@read_token),
           write_token: client.instance_variable_get(:@write_token)
