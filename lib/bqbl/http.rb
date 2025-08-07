@@ -144,7 +144,7 @@ module BQBL
 
       data = request(:get, url, options)[:data]
 
-      if @auto_paginate
+      if @auto_paginate && total_present_in_stats?
         # While there are more results to fetch, and we have not hit the rate limit
         while total_count = last_response_body[:meta][:stats][:total][:count] > data.length && rate_limit.remaining > 0
           options[:page][:number] = options[:page][:number] + 1
@@ -368,6 +368,16 @@ module BQBL
                           raise CompanyRequired if company.nil? || company.empty?
                           Addressable::URI.join("#{api_protocol}://#{company}.#{api_domain}/", "api/", api_version.to_s).to_s
                         end
+    end
+
+    # Checks if the total count is present in the last response stats.
+    #
+    # @return [Boolean] true if total count is present, false otherwise
+    def total_present_in_stats?
+      last_response_body &&
+        last_response_body[:meta] &&
+        last_response_body[:meta][:stats] &&
+        last_response_body[:meta][:stats][:total]
     end
   end
 end

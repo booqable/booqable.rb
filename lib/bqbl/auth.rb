@@ -37,7 +37,7 @@ module BQBL
     #   # In your OAuth callback handler
     #   client.authenticate_with_code(params[:code])
     def authenticate_with_code(code)
-      token = @oauth_client.get_token_from_code(code)
+      token = oauth_client.get_token_from_code(code)
       @write_token.call(token.to_hash)
     end
 
