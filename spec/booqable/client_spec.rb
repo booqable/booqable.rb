@@ -311,7 +311,7 @@ describe Booqable::Client do
             {
               access_token: test_access_token,
               refresh_token: test_refresh_token,
-              expires_at: nil
+              expires_at: Time.now + 3600
             }
           }
         )

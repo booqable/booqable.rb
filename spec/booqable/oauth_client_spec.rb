@@ -331,6 +331,62 @@ describe Booqable::OAuthClient do
         expect(stored_token).to eq(new_token)
       end
 
+      it "handles token refresh when expires_at is nil" do
+        stored_token = {
+          "access_token" => "current_token",
+          "refresh_token" => "refresh_token_123",
+          "expires_at" => nil
+        }
+
+        new_token = {
+          "access_token" => "new_token",
+          "refresh_token" => "new_refresh_token",
+          "expires_at" => Time.now + 3600
+        }
+
+        client = Booqable::Client.new(
+          client_id: test_client_id,
+          client_secret: test_client_secret,
+          redirect_uri: test_redirect_uri,
+          api_domain: "booqable.test",
+          company: "demo",
+          read_token: -> { stored_token },
+          write_token: ->(token) { stored_token = token }
+        )
+
+        # Mock the OAuth2 token refresh process
+        new_oauth_token = double("NewAccessToken",
+          to_hash: new_token,
+          token: new_token["access_token"]
+        )
+
+        old_oauth_token = double("OldAccessToken",
+          expired?: false,
+          expires_at: nil,
+          refresh!: new_oauth_token
+        )
+
+        allow(OAuth2::AccessToken).to receive(:from_hash).and_return(old_oauth_token)
+
+        middleware = Booqable::Middleware::Auth::OAuth.new(
+          ->(env) { env },
+          client_id: test_client_id,
+          client_secret: test_client_secret,
+          api_endpoint: test_api_endpoint,
+          redirect_uri: test_redirect_uri,
+          read_token: client.instance_variable_get(:@read_token),
+          write_token: client.instance_variable_get(:@write_token)
+        )
+
+        env = double("Environment")
+        allow(env).to receive(:request_headers).and_return({})
+        allow(env).to receive(:[]=)
+
+        middleware.call(env)
+
+        expect(stored_token).to eq(new_token)
+      end
+
       it "handles OAuth errors during token refresh" do
         stored_token = {
           "access_token" => "old_token",
