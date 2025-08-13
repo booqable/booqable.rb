@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-# Specify your gem's dependencies in bqbl.gemspec
+# Specify your gem's dependencies in booqable.gemspec
 gemspec
 
 group :development do

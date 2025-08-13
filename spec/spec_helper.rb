@@ -6,7 +6,7 @@ SimpleCov.start do
 end
 
 require "debug"
-require "bqbl"
+require "booqable"
 require "rspec"
 require "vcr"
 require "webmock/rspec"
@@ -126,7 +126,7 @@ def test_endpoint
 end
 
 def api_key_client(api_key: test_api_key, company: test_company)
-  BQBL::Client.new(api_key:, company:, api_domain: "booqable.test", no_retries: true)
+  Booqable::Client.new(api_key:, company:, api_domain: "booqable.test", no_retries: true)
 end
 
 def stub_delete(url)

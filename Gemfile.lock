@@ -11,7 +11,7 @@ GIT
 PATH
   remote: .
   specs:
-    bqbl (0.1.0)
+    booqable (0.1.0)
       addressable (~> 2.8)
       faraday (~> 2.13)
       faraday-retry (~> 2.3)
@@ -55,7 +55,7 @@ GEM
     docile (1.4.1)
     drb (2.2.3)
     erb (5.0.1)
-    faraday (2.13.1)
+    faraday (2.13.2)
       faraday-net_http (>= 2.0, < 3.5)
       json
       logger
@@ -190,7 +190,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bqbl!
+  booqable!
   debug (~> 1.11)
   rake (~> 13.0)
   rspec (~> 3.0)

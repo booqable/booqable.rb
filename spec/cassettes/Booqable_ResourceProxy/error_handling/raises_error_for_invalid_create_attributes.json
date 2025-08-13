@@ -1,0 +1,99 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "post",
+        "uri": "http://<BOOQABLE_COMPANY>.booqable.test/api/4/orders",
+        "body": {
+          "encoding": "UTF-8",
+          "string": "{\"data\":{\"type\":\"orders\",\"attributes\":{\"invalid_field\":\"invalid_value\"}},\"headers\":{\"accept\":\"application/vnd.api+json\",\"content_type\":\"application/vnd.api+json\",\"user_agent\":\"Booqable Ruby Gem 0.1.0\"}}"
+        },
+        "headers": {
+          "Accept": [
+            "application/vnd.api+json"
+          ],
+          "Content-Type": [
+            "application/vnd.api+json"
+          ],
+          "User-Agent": [
+            "Booqable Ruby Gem 0.1.0"
+          ],
+          "Authorization": [
+            "Bearer <BOOQABLE_API_KEY>"
+          ],
+          "Accept-Encoding": [
+            "gzip;q=1.0,deflate;q=0.6,identity;q=0.3"
+          ]
+        }
+      },
+      "response": {
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        },
+        "headers": {
+          "Access-Control-Allow-Credentials": [
+            "false"
+          ],
+          "Cache-Control": [
+            "no-cache"
+          ],
+          "Content-Type": [
+            "application/json; charset=utf-8"
+          ],
+          "Referrer-Policy": [
+            "strict-origin-when-cross-origin"
+          ],
+          "Server-Timing": [
+            "sql.active_record;dur=7.48, instantiation.active_record;dur=0.27, start_processing.action_controller;dur=0.00, adapter_operation.flipper;dur=0.87, cache_read.active_support;dur=0.01, cache_write.active_support;dur=0.05, start_transaction.active_record;dur=0.00, transaction.active_record;dur=1.49, enqueue.active_job;dur=1.47, flush_debug.graphiti;dur=0.01, process_action.action_controller;dur=83.46"
+          ],
+          "Set-Cookie": [
+            "<SESSION_COOKIE>"
+          ],
+          "Vary": [
+            "Accept-Encoding, Origin"
+          ],
+          "X-Content-Type-Options": [
+            "nosniff"
+          ],
+          "X-Frame-Options": [
+            "SAMEORIGIN"
+          ],
+          "X-Permitted-Cross-Domain-Policies": [
+            "none"
+          ],
+          "X-Ratelimit-Limit": [
+            "50"
+          ],
+          "X-Ratelimit-Period": [
+            "60"
+          ],
+          "X-Ratelimit-Remaining": [
+            "8"
+          ],
+          "X-Request-Id": [
+            "b6efa8ab-b632-4241-98cd-45c6d5b7fa1f"
+          ],
+          "X-Runtime": [
+            "0.127083"
+          ],
+          "X-Xss-Protection": [
+            "0"
+          ],
+          "Date": [
+            "Wed, 09 Jul 2025 12:28:45 GMT"
+          ],
+          "Transfer-Encoding": [
+            "chunked"
+          ]
+        },
+        "body": {
+          "encoding": "ASCII-8BIT",
+          "string": "{\"errors\":[{\"code\":\"bad_request\",\"status\":\"400\",\"title\":\"Request Error\",\"detail\":\"data.attributes.invalid_field is an unknown attribute\",\"source\":{\"pointer\":\"data/attributes/invalid_field\"},\"meta\":{\"attribute\":\"data.attributes.invalid_field\",\"message\":\"is an unknown attribute\",\"code\":\"unknown_attribute\"}}]}"
+        }
+      },
+      "recorded_at": "Wed, 09 Jul 2025 12:28:45 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.3.1"
+}

@@ -1,4 +1,4 @@
-# BQBL.rb
+# Booqable.rb
 
 Ruby toolkit for the [Booqable API](https://developers.booqable.com/).
 
@@ -20,7 +20,7 @@ Ruby toolkit for the [Booqable API](https://developers.booqable.com/).
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'bqbl'
+gem 'booqable'
 ```
 
 And then execute:
@@ -32,7 +32,7 @@ bundle install
 Or install it yourself as:
 
 ```bash
-gem install bqbl
+gem install booqable
 ```
 
 ## Making requests
@@ -41,20 +41,20 @@ API methods are available as module methods (consuming module-level configuratio
 
 ```ruby
 # Provide authentication credentials
-BQBL.configure do |c|
+Booqable.configure do |c|
   c.api_key = 'your_api_key_here'
   c.company = 'your_company_subdomain'
 end
 
 # Fetch orders
-orders = BQBL.orders.list
+orders = Booqable.orders.list
 ```
 
 or
 
 ```ruby
 # Create a client instance
-client = BQBL::Client.new(
+client = Booqable::Client.new(
   api_key: 'your_api_key_here',
   company: 'your_company_subdomain'
 )
@@ -65,14 +65,14 @@ orders = client.orders.list
 
 ## Authentication
 
-BQBL supports several authentication methods to suit different use cases:
+Booqable supports several authentication methods to suit different use cases:
 
 ### API Key Authentication (Recommended)
 
 The simplest way to authenticate is with an API key:
 
 ```ruby
-BQBL.configure do |c|
+Booqable.configure do |c|
   c.api_key = 'your_api_key_here'
   c.company = 'your_company_subdomain'
 end
@@ -85,7 +85,7 @@ Generate your API key from your Booqable account settings. [Learn more about API
 For applications that need to act on behalf of multiple users:
 
 ```ruby
-client = BQBL::Client.new(
+client = Booqable::Client.new(
   client_id: 'your_oauth_client_id',
   client_secret: 'your_oauth_client_secret',
   company: 'your_company_subdomain',
@@ -108,7 +108,7 @@ client.authenticate_with_code(params[:code])
 For server-to-server communication requiring enhanced security:
 
 ```ruby
-client = BQBL::Client.new(
+client = Booqable::Client.new(
   single_use_token: 'your_token_id',
   single_use_token_algorithm: 'HS256',
   single_use_token_secret: 'your_signing_secret',
@@ -133,10 +133,10 @@ export BOOQABLE_CLIENT_SECRET="your_oauth_client_secret"
 
 ## Configuration
 
-BQBL is highly configurable to suit different environments and use cases:
+Booqable is highly configurable to suit different environments and use cases:
 
 ```ruby
-BQBL.configure do |c|
+Booqable.configure do |c|
   c.api_key = 'your_api_key_here'
   c.company = 'your_company_subdomain'
   c.api_domain = 'booqable.com'        # Default
@@ -149,7 +149,7 @@ end
 ### Per-client configuration
 
 ```ruby
-client = BQBL::Client.new(
+client = Booqable::Client.new(
   api_key: 'your_api_key_here',
   company: 'your_company_subdomain',
   per_page: 50,
@@ -159,37 +159,37 @@ client = BQBL::Client.new(
 
 ## Pagination
 
-The Booqable API uses cursor-based pagination. BQBL provides several ways to handle paginated responses:
+The Booqable API uses cursor-based pagination. Booqable provides several ways to handle paginated responses:
 
 ### Manual pagination
 
 ```ruby
 # Fetch first page
-orders = BQBL.orders.list(page: { size: 25, number: 1 })
+orders = Booqable.orders.list(page: { size: 25, number: 1 })
 
 # Fetch next page
-next_orders = BQBL.orders.list(page: { size: 25, number: 2 })
+next_orders = Booqable.orders.list(page: { size: 25, number: 2 })
 ```
 
 ### Auto-pagination
 
 ```ruby
 # Configure auto-pagination
-BQBL.auto_paginate = true
+Booqable.auto_paginate = true
 
 # This will automatically fetch ALL orders across all pages
-all_orders = BQBL.orders.list
+all_orders = Booqable.orders.list
 ```
 
 ## Rate limiting
 
-BQBL automatically handles rate limiting and provides access to rate limit information:
+Booqable automatically handles rate limiting and provides access to rate limit information:
 
 ```ruby
-orders = BQBL.orders.list
+orders = Booqable.orders.list
 
 # Check rate limit status
-rate_limit = BQBL.rate_limit
+rate_limit = Booqable.rate_limit
 puts "Remaining requests: #{rate_limit.remaining}"
 puts "Reset time: #{rate_limit.reset_at}"
 puts "Limit: #{rate_limit.limit}"
@@ -197,38 +197,38 @@ puts "Limit: #{rate_limit.limit}"
 
 ### Automatic retries
 
-BQBL includes automatic retry logic so every request will be retried two times
+Booqable includes automatic retry logic so every request will be retried two times
 by default if it fails due to a server error.
 
 To disable automatic retries, you can configure it globally:
 
 ```ruby
-BQBL.configure do |c|
+Booqable.configure do |c|
   c.no_retries = true # Disable automatic retries
 end
 ```
 
 ## Resources
 
-BQBL provides access to all Booqable API resources through a consistent interface:
+Booqable provides access to all Booqable API resources through a consistent interface:
 
 ### Orders
 
 ```ruby
 # List orders with filtering and includes
-orders = BQBL.orders.list(
+orders = Booqable.orders.list(
   include: 'customer,items',
   filter: { status: 'reserved' },
   sort: '-created_at'
 )
 
 # Find specific order
-order = BQBL.orders.find('order_id', include: 'customer,items')
+order = Booqable.orders.find('order_id', include: 'customer,items')
 order.items.count
 order.customer.name
 
 # Create order
-new_order = BQBL.orders.create(
+new_order = Booqable.orders.create(
   starts_at: '2024-01-01T00:00:00Z',
   stops_at: '2024-01-02T00:00:00Z',
   status: 'draft'
@@ -236,7 +236,7 @@ new_order = BQBL.orders.create(
 new_order.status  # => 'draft'
 
 # Update order
-updated_order = BQBL.orders.update('order_id', status: 'reserved')
+updated_order = Booqable.orders.update('order_id', status: 'reserved')
 updated_order.status  # => 'reserved'
 ```
 
@@ -244,35 +244,35 @@ updated_order.status  # => 'reserved'
 
 ```ruby
 # List customers
-customers = BQBL.customers.list(
+customers = Booqable.customers.list(
   filter: { name: 'John' },
   sort: 'created_at'
 )
 
 # Create customer
-customer = BQBL.customers.create(
+customer = Booqable.customers.create(
   name: 'John Doe',
   email: 'john@example.com'
 )
 
 # Update customer
-BQBL.customers.update('customer_id', name: 'Jane Doe')
+Booqable.customers.update('customer_id', name: 'Jane Doe')
 ```
 
 ### Products
 
 ```ruby
 # List products with inventory information
-products = BQBL.products.list(
+products = Booqable.products.list(
   include: 'inventory_levels',
   filter: { type: 'trackable' }
 )
 
 # Find product
-product = BQBL.products.find('product_id', include: 'properties')
+product = Booqable.products.find('product_id', include: 'properties')
 
 # Create product
-product = BQBL.products.create(
+product = Booqable.products.create(
   name: 'Camera',
   type: 'trackable',
   base_price_in_cents: 50000
@@ -281,7 +281,7 @@ product = BQBL.products.create(
 
 ### Available resources
 
-BQBL provides access to all Booqable API resources:
+Booqable provides access to all Booqable API resources:
 
 **Core Resources:**
 - `orders`, `customers`, `products`, `items`
@@ -296,19 +296,19 @@ BQBL provides access to all Booqable API resources:
 - `settings`, `properties`, `tax_rates`
 - `payment_methods`, `email_templates`
 
-**And many more...** See the [full resource list](lib/bqbl/resources.json) for all available endpoints.
+**And many more...** See the [full resource list](lib/booqable/resources.json) for all available endpoints.
 
 ## Advanced usage
 
 ### Custom middleware
 
-BQBL uses Faraday for HTTP requests. You can customize the middleware stack:
+Booqable uses Faraday for HTTP requests. You can customize the middleware stack:
 
 ```ruby
-BQBL.configure do |c|
+Booqable.configure do |c|
   c.middleware = Faraday::RackBuilder.new do |builder|
     builder.use MyCustomMiddleware
-    builder.use BQBL::Middleware::RaiseError
+    builder.use Booqable::Middleware::RaiseError
     builder.adapter Faraday.default_adapter
   end
 end
@@ -317,7 +317,7 @@ end
 ### Connection options
 
 ```ruby
-BQBL.configure do |c|
+Booqable.configure do |c|
   c.connection_options = {
     headers: { 'X-Custom-Header' => 'value' },
     ssl: { verify: false },
@@ -329,7 +329,7 @@ end
 ### Proxy support
 
 ```ruby
-BQBL.configure do |c|
+Booqable.configure do |c|
   c.proxy = 'http://proxy.example.com:8080'
 end
 ```
@@ -338,12 +338,12 @@ end
 
 ```ruby
 # Access raw response data
-response = BQBL.orders.list
+response = Booqable.orders.list
 puts response.class  # => Sawyer::Resource
 
 # Get response metadata
-puts BQBL.last_response.status
-puts BQBL.last_response.headers
+puts Booqable.last_response.status
+puts Booqable.last_response.headers
 ```
 
 ## Development
@@ -359,16 +359,16 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 bundle exec rake spec
 
 # Run specific test file
-bundle exec rspec spec/bqbl/client_spec.rb
+bundle exec rspec spec/booqable/client_spec.rb
 ```
 
 ### Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/booqable/bqbl.rb. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/booqable/bqbl.rb/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/booqable/booqable.rb. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/booqable/booqable.rb/blob/master/CODE_OF_CONDUCT.md).
 
 ## Versioning
 
-This library aims to support and is [tested against](https://github.com/booqable/bqbl.rb/actions) the following Ruby versions:
+This library aims to support and is [tested against](https://github.com/booqable/booqable.rb/actions) the following Ruby versions:
 
 - Ruby 3.2
 - Ruby 3.3
@@ -384,8 +384,8 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the BQBL project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/booqable/bqbl.rb/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Booqable project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/booqable/booqable.rb/blob/master/CODE_OF_CONDUCT.md).
 
 ---
 
-**Questions?** Check out the [Booqable API documentation](https://developers.booqable.com/) or [open an issue](https://github.com/booqable/bqbl.rb/issues/new).
+**Questions?** Check out the [Booqable API documentation](https://developers.booqable.com/) or [open an issue](https://github.com/booqable/booqable.rb/issues/new).

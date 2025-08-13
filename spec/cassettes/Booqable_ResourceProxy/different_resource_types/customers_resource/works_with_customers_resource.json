@@ -1,0 +1,108 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "get",
+        "uri": "http://<BOOQABLE_COMPANY>.booqable.test/api/4/customers?page%5Bnumber%5D=1&page%5Bsize%5D=25&stats%5Btotal%5D=count",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "Accept": [
+            "application/vnd.api+json"
+          ],
+          "Content-Type": [
+            "application/vnd.api+json"
+          ],
+          "User-Agent": [
+            "Booqable Ruby Gem 0.1.0"
+          ],
+          "Authorization": [
+            "Bearer <BOOQABLE_API_KEY>"
+          ],
+          "Accept-Encoding": [
+            "gzip;q=1.0,deflate;q=0.6,identity;q=0.3"
+          ]
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": "OK"
+        },
+        "headers": {
+          "Access-Control-Allow-Credentials": [
+            "false"
+          ],
+          "Cache-Control": [
+            "max-age=0, private, must-revalidate"
+          ],
+          "Client-Version": [
+            "336d5ebc5436534e61d16e63ddfca327"
+          ],
+          "Content-Length": [
+            "14533"
+          ],
+          "Content-Type": [
+            "application/vnd.api+json; charset=utf-8"
+          ],
+          "Etag": [
+            "W/\"ac4fffcd0747f142cc935062d235ac72\""
+          ],
+          "Referrer-Policy": [
+            "strict-origin-when-cross-origin"
+          ],
+          "Server-Timing": [
+            "sql.active_record;dur=15.23, instantiation.active_record;dur=5.89, start_processing.action_controller;dur=0.01, adapter_operation.flipper;dur=2.52, cache_read.active_support;dur=0.04, cache_write.active_support;dur=0.12, start_transaction.active_record;dur=0.00, transaction.active_record;dur=2.21, enqueue.active_job;dur=1.42, cache_generate.active_support;dur=0.82, search.searchkick;dur=17.61, resolve.graphiti;dur=27.90, render.graphiti;dur=18.79, flush_debug.graphiti;dur=0.18, process_action.action_controller;dur=138.49"
+          ],
+          "Session-Expiry-Token": [
+            "17b70851ea5e258b171eb7a337c50067"
+          ],
+          "Set-Cookie": [
+            "<SESSION_COOKIE>"
+          ],
+          "Vary": [
+            "Accept-Encoding, Origin"
+          ],
+          "X-Content-Type-Options": [
+            "nosniff"
+          ],
+          "X-Frame-Options": [
+            "SAMEORIGIN"
+          ],
+          "X-Permitted-Cross-Domain-Policies": [
+            "none"
+          ],
+          "X-Ratelimit-Limit": [
+            "50"
+          ],
+          "X-Ratelimit-Period": [
+            "60"
+          ],
+          "X-Ratelimit-Remaining": [
+            "21"
+          ],
+          "X-Request-Id": [
+            "1d51d4f0-b9ff-4ffd-bae5-180b22260edb"
+          ],
+          "X-Runtime": [
+            "0.206602"
+          ],
+          "X-Xss-Protection": [
+            "0"
+          ],
+          "Date": [
+            "Wed, 09 Jul 2025 12:28:43 GMT"
+          ]
+        },
+        "body": {
+          "encoding": "ASCII-8BIT",
+          "string": "{\"data\":[{\"id\":\"96f7c88a-c78b-44e1-90ae-cd4120008718\",\"type\":\"customers\",\"attributes\":{\"created_at\":\"2024-12-13T11:10:40.533077+00:00\",\"updated_at\":\"2024-12-16T09:25:41.481234+00:00\",\"archived\":false,\"archived_at\":null,\"number\":1,\"name\":\"first last\",\"email\":\"first@example.com\",\"deposit_type\":\"percentage\",\"deposit_value\":100.0,\"discount_percentage\":0.0,\"legal_type\":\"person\",\"email_marketing_consented\":false,\"email_marketing_consent_updated_at\":null,\"properties\":{\"phone\":null,\"main_address\":\"\"},\"tag_list\":[],\"stripe_id\":null,\"merge_suggestion_customer_id\":null,\"tax_region_id\":null},\"relationships\":{}},{\"id\":\"3e70c6cc-8db0-42f6-b76e-3e7f710373a5\",\"type\":\"customers\",\"attributes\":{\"created_at\":\"2024-12-16T09:42:23.534433+00:00\",\"updated_at\":\"2025-02-28T08:55:56.802186+00:00\",\"archived\":false,\"archived_at\":null,\"number\":2,\"name\":\"first last\",\"email\":\"first@last.com\",\"deposit_type\":\"default\",\"deposit_value\":0.0,\"discount_percentage\":0.0,\"legal_type\":\"person\",\"email_marketing_consented\":false,\"email_marketing_consent_updated_at\":null,\"properties\":{\"main_address\":\"\"},\"tag_list\":[],\"stripe_id\":null,\"merge_suggestion_customer_id\":null,\"tax_region_id\":null},\"relationships\":{}},{\"id\":\"d92544ee-787f-42b3-96f4-b808f7a16508\",\"type\":\"customers\",\"attributes\":{\"created_at\":\"2024-12-16T09:49:06.185984+00:00\",\"updated_at\":\"2024-12-16T09:49:06.195773+00:00\",\"archived\":false,\"archived_at\":null,\"number\":3,\"name\":\"John Doe\",\"email\":null,\"deposit_type\":\"percentage\",\"deposit_value\":100.0,\"discount_percentage\":0.0,\"legal_type\":\"person\",\"email_marketing_consented\":false,\"email_marketing_consent_updated_at\":null,\"properties\":{\"phone\":null,\"main_address\":\"\"},\"tag_list\":[],\"stripe_id\":null,\"merge_suggestion_customer_id\":null,\"tax_region_id\":null},\"relationships\":{}},{\"id\":\"23edcbae-067e-4cc3-a717-1b7935a22af8\",\"type\":\"customers\",\"attributes\":{\"created_at\":\"2024-12-20T11:17:30.637393+00:00\",\"updated_at\":\"2025-03-19T13:49:40.540567+00:00\",\"archived\":false,\"archived_at\":null,\"number\":4,\"name\":\"john doe\",\"email\":\"john.doe@example.com\",\"deposit_type\":\"percentage\",\"deposit_value\":100.0,\"discount_percentage\":0.0,\"legal_type\":\"person\",\"email_marketing_consented\":false,\"email_marketing_consent_updated_at\":null,\"properties\":{\"phone\":null,\"main_address\":\"\"},\"tag_list\":[],\"stripe_id\":null,\"merge_suggestion_customer_id\":null,\"tax_region_id\":null},\"relationships\":{}},{\"id\":\"4958dde4-dbc8-4681-bd42-1378e3698c0b\",\"type\":\"customers\",\"attributes\":{\"created_at\":\"2025-01-21T09:07:33.527254+00:00\",\"updated_at\":\"2025-01-22T13:54:27.973209+00:00\",\"archived\":false,\"archived_at\":null,\"number\":5,\"name\":\"Example User\",\"email\":\"example@user.com\",\"deposit_type\":\"default\",\"deposit_value\":0.0,\"discount_percentage\":0.0,\"legal_type\":\"person\",\"email_marketing_consented\":false,\"email_marketing_consent_updated_at\":null,\"properties\":{\"main_address\":\"\"},\"tag_list\":[],\"stripe_id\":null,\"merge_suggestion_customer_id\":null,\"tax_region_id\":null},\"relationships\":{}},{\"id\":\"dde33f83-691f-4c93-8402-c495c1e62686\",\"type\":\"customers\",\"attributes\":{\"created_at\":\"2025-01-22T14:08:26.915917+00:00\",\"updated_at\":\"2025-01-22T14:08:38.821368+00:00\",\"archived\":false,\"archived_at\":null,\"number\":6,\"name\":\"Hrvoje Simic\",\"email\":\"user@example.com\",\"deposit_type\":\"default\",\"deposit_value\":0.0,\"discount_percentage\":0.0,\"legal_type\":\"person\",\"email_marketing_consented\":false,\"email_marketing_consent_updated_at\":null,\"properties\":{\"main_address\":\"\"},\"tag_list\":[],\"stripe_id\":null,\"merge_suggestion_customer_id\":null,\"tax_region_id\":null},\"relationships\":{}},{\"id\":\"3517112e-57cb-4cf9-8602-13b1febd8ba4\",\"type\":\"customers\",\"attributes\":{\"created_at\":\"2025-03-14T11:55:38.677934+00:00\",\"updated_at\":\"2025-03-14T11:55:38.687852+00:00\",\"archived\":false,\"archived_at\":null,\"number\":7,\"name\":\"John Doe\",\"email\":\"john.doe@example.com\",\"deposit_type\":\"default\",\"deposit_value\":0.0,\"discount_percentage\":0.0,\"legal_type\":\"person\",\"email_marketing_consented\":false,\"email_marketing_consent_updated_at\":null,\"properties\":{\"main_address\":\"\"},\"tag_list\":[],\"stripe_id\":null,\"merge_suggestion_customer_id\":\"d92544ee-787f-42b3-96f4-b808f7a16508\",\"tax_region_id\":null},\"relationships\":{}},{\"id\":\"2bfd562e-e0b8-4121-9187-2b5bdfbd7922\",\"type\":\"customers\",\"attributes\":{\"created_at\":\"2025-03-18T09:35:57.146375+00:00\",\"updated_at\":\"2025-04-01T10:55:41.153900+00:00\",\"archived\":false,\"archived_at\":null,\"number\":8,\"name\":\"example user\",\"email\":\"user@example.com\",\"deposit_type\":\"default\",\"deposit_value\":0.0,\"discount_percentage\":0.0,\"legal_type\":\"person\",\"email_marketing_consented\":false,\"email_marketing_consent_updated_at\":null,\"properties\":{\"main_address\":\"\"},\"tag_list\":[],\"stripe_id\":null,\"merge_suggestion_customer_id\":\"4958dde4-dbc8-4681-bd42-1378e3698c0b\",\"tax_region_id\":null},\"relationships\":{}},{\"id\":\"5233c6ca-eddd-4142-8e24-0bcc1d312967\",\"type\":\"customers\",\"attributes\":{\"created_at\":\"2025-03-27T14:54:07.699495+00:00\",\"updated_at\":\"2025-03-27T14:54:07.699495+00:00\",\"archived\":false,\"archived_at\":null,\"number\":9,\"name\":\"John Doe\",\"email\":\"john-1@doe.test\",\"deposit_type\":\"default\",\"deposit_value\":0.0,\"discount_percentage\":0.0,\"legal_type\":\"person\",\"email_marketing_consented\":false,\"email_marketing_consent_updated_at\":null,\"properties\":{},\"tag_list\":[],\"stripe_id\":null,\"merge_suggestion_customer_id\":null,\"tax_region_id\":null},\"relationships\":{}},{\"id\":\"13394a65-13b5-41c2-9a60-6860a3bb51c1\",\"type\":\"customers\",\"attributes\":{\"created_at\":\"2025-03-27T14:54:07.747101+00:00\",\"updated_at\":\"2025-03-27T14:54:07.747101+00:00\",\"archived\":false,\"archived_at\":null,\"number\":10,\"name\":\"John Doe\",\"email\":\"john-2@doe.test\",\"deposit_type\":\"default\",\"deposit_value\":0.0,\"discount_percentage\":0.0,\"legal_type\":\"person\",\"email_marketing_consented\":false,\"email_marketing_consent_updated_at\":null,\"properties\":{},\"tag_list\":[],\"stripe_id\":null,\"merge_suggestion_customer_id\":null,\"tax_region_id\":null},\"relationships\":{}},{\"id\":\"c70ad621-241d-4904-bb52-dbc5f42978d6\",\"type\":\"customers\",\"attributes\":{\"created_at\":\"2025-03-27T14:54:07.763181+00:00\",\"updated_at\":\"2025-03-27T14:54:07.763181+00:00\",\"archived\":false,\"archived_at\":null,\"number\":11,\"name\":\"John Doe\",\"email\":\"john-3@doe.test\",\"deposit_type\":\"default\",\"deposit_value\":0.0,\"discount_percentage\":0.0,\"legal_type\":\"person\",\"email_marketing_consented\":false,\"email_marketing_consent_updated_at\":null,\"properties\":{},\"tag_list\":[],\"stripe_id\":null,\"merge_suggestion_customer_id\":null,\"tax_region_id\":null},\"relationships\":{}},{\"id\":\"8f1873b2-5b9d-4c75-b0ff-9b06ea20ad6c\",\"type\":\"customers\",\"attributes\":{\"created_at\":\"2025-03-27T14:54:07.776615+00:00\",\"updated_at\":\"2025-03-27T14:54:07.776615+00:00\",\"archived\":false,\"archived_at\":null,\"number\":12,\"name\":\"John Doe\",\"email\":\"john-4@doe.test\",\"deposit_type\":\"default\",\"deposit_value\":0.0,\"discount_percentage\":0.0,\"legal_type\":\"person\",\"email_marketing_consented\":false,\"email_marketing_consent_updated_at\":null,\"properties\":{},\"tag_list\":[],\"stripe_id\":null,\"merge_suggestion_customer_id\":null,\"tax_region_id\":null},\"relationships\":{}},{\"id\":\"52f6f16d-feec-4553-af32-a973bcc6f06b\",\"type\":\"customers\",\"attributes\":{\"created_at\":\"2025-03-27T14:54:09.461044+00:00\",\"updated_at\":\"2025-03-27T14:54:09.461044+00:00\",\"archived\":false,\"archived_at\":null,\"number\":13,\"name\":\"John Doe\",\"email\":\"john-5@doe.test\",\"deposit_type\":\"default\",\"deposit_value\":0.0,\"discount_percentage\":0.0,\"legal_type\":\"person\",\"email_marketing_consented\":false,\"email_marketing_consent_updated_at\":null,\"properties\":{},\"tag_list\":[],\"stripe_id\":null,\"merge_suggestion_customer_id\":null,\"tax_region_id\":null},\"relationships\":{}},{\"id\":\"a536540a-371b-4ba3-b271-b7eb7bf23069\",\"type\":\"customers\",\"attributes\":{\"created_at\":\"2025-03-27T14:54:09.525971+00:00\",\"updated_at\":\"2025-03-27T14:54:09.525971+00:00\",\"archived\":false,\"archived_at\":null,\"number\":14,\"name\":\"John Doe\",\"email\":\"john-6@doe.test\",\"deposit_type\":\"default\",\"deposit_value\":0.0,\"discount_percentage\":0.0,\"legal_type\":\"person\",\"email_marketing_consented\":false,\"email_marketing_consent_updated_at\":null,\"properties\":{},\"tag_list\":[],\"stripe_id\":null,\"merge_suggestion_customer_id\":null,\"tax_region_id\":null},\"relationships\":{}},{\"id\":\"823af2e2-bf64-4d69-ac30-6a2edf3e94b9\",\"type\":\"customers\",\"attributes\":{\"created_at\":\"2025-03-27T14:54:09.589686+00:00\",\"updated_at\":\"2025-03-27T14:54:09.589686+00:00\",\"archived\":false,\"archived_at\":null,\"number\":15,\"name\":\"John Doe\",\"email\":\"john-7@doe.test\",\"deposit_type\":\"default\",\"deposit_value\":0.0,\"discount_percentage\":0.0,\"legal_type\":\"person\",\"email_marketing_consented\":false,\"email_marketing_consent_updated_at\":null,\"properties\":{},\"tag_list\":[],\"stripe_id\":null,\"merge_suggestion_customer_id\":null,\"tax_region_id\":null},\"relationships\":{}},{\"id\":\"986ca82b-e10e-4c32-ace4-83003a69e38b\",\"type\":\"customers\",\"attributes\":{\"created_at\":\"2025-03-27T14:54:09.638557+00:00\",\"updated_at\":\"2025-03-27T14:54:09.638557+00:00\",\"archived\":false,\"archived_at\":null,\"number\":16,\"name\":\"John Doe\",\"email\":\"john-8@doe.test\",\"deposit_type\":\"default\",\"deposit_value\":0.0,\"discount_percentage\":0.0,\"legal_type\":\"person\",\"email_marketing_consented\":false,\"email_marketing_consent_updated_at\":null,\"properties\":{},\"tag_list\":[],\"stripe_id\":null,\"merge_suggestion_customer_id\":null,\"tax_region_id\":null},\"relationships\":{}},{\"id\":\"c2b6d72a-26d2-4960-be57-dfeb981893cd\",\"type\":\"customers\",\"attributes\":{\"created_at\":\"2025-03-27T14:54:09.696101+00:00\",\"updated_at\":\"2025-03-27T14:54:09.696101+00:00\",\"archived\":false,\"archived_at\":null,\"number\":17,\"name\":\"John Doe\",\"email\":\"john-9@doe.test\",\"deposit_type\":\"default\",\"deposit_value\":0.0,\"discount_percentage\":0.0,\"legal_type\":\"person\",\"email_marketing_consented\":false,\"email_marketing_consent_updated_at\":null,\"properties\":{},\"tag_list\":[],\"stripe_id\":null,\"merge_suggestion_customer_id\":null,\"tax_region_id\":null},\"relationships\":{}},{\"id\":\"212f866e-edcf-4967-8f00-70f8b57b2be8\",\"type\":\"customers\",\"attributes\":{\"created_at\":\"2025-03-27T14:54:09.788969+00:00\",\"updated_at\":\"2025-03-27T14:54:09.788969+00:00\",\"archived\":false,\"archived_at\":null,\"number\":18,\"name\":\"John Doe\",\"email\":\"john-10@doe.test\",\"deposit_type\":\"default\",\"deposit_value\":0.0,\"discount_percentage\":0.0,\"legal_type\":\"person\",\"email_marketing_consented\":false,\"email_marketing_consent_updated_at\":null,\"properties\":{},\"tag_list\":[],\"stripe_id\":null,\"merge_suggestion_customer_id\":null,\"tax_region_id\":null},\"relationships\":{}},{\"id\":\"bbd78134-b68a-4ece-bc9d-48d6348cf9a2\",\"type\":\"customers\",\"attributes\":{\"created_at\":\"2025-03-27T14:54:12.340799+00:00\",\"updated_at\":\"2025-03-27T14:54:12.340799+00:00\",\"archived\":false,\"archived_at\":null,\"number\":19,\"name\":\"John Doe\",\"email\":\"john-11@doe.test\",\"deposit_type\":\"default\",\"deposit_value\":0.0,\"discount_percentage\":0.0,\"legal_type\":\"person\",\"email_marketing_consented\":false,\"email_marketing_consent_updated_at\":null,\"properties\":{},\"tag_list\":[],\"stripe_id\":null,\"merge_suggestion_customer_id\":null,\"tax_region_id\":null},\"relationships\":{}},{\"id\":\"af2b6121-8510-402a-9b27-4ebbd826bd3a\",\"type\":\"customers\",\"attributes\":{\"created_at\":\"2025-03-27T14:54:12.993065+00:00\",\"updated_at\":\"2025-03-27T14:54:12.993065+00:00\",\"archived\":false,\"archived_at\":null,\"number\":20,\"name\":\"John Doe\",\"email\":\"john-12@doe.test\",\"deposit_type\":\"default\",\"deposit_value\":0.0,\"discount_percentage\":0.0,\"legal_type\":\"person\",\"email_marketing_consented\":false,\"email_marketing_consent_updated_at\":null,\"properties\":{},\"tag_list\":[],\"stripe_id\":null,\"merge_suggestion_customer_id\":null,\"tax_region_id\":null},\"relationships\":{}},{\"id\":\"dc213590-e046-4a8d-8e56-1d6b9c49a616\",\"type\":\"customers\",\"attributes\":{\"created_at\":\"2025-03-27T14:54:13.466596+00:00\",\"updated_at\":\"2025-03-27T14:54:13.466596+00:00\",\"archived\":false,\"archived_at\":null,\"number\":21,\"name\":\"John Doe\",\"email\":\"john-13@doe.test\",\"deposit_type\":\"default\",\"deposit_value\":0.0,\"discount_percentage\":0.0,\"legal_type\":\"person\",\"email_marketing_consented\":false,\"email_marketing_consent_updated_at\":null,\"properties\":{},\"tag_list\":[],\"stripe_id\":null,\"merge_suggestion_customer_id\":null,\"tax_region_id\":null},\"relationships\":{}},{\"id\":\"607f9b39-d065-4727-9017-507c089fc7b3\",\"type\":\"customers\",\"attributes\":{\"created_at\":\"2025-03-27T14:54:13.494181+00:00\",\"updated_at\":\"2025-03-27T14:54:13.494181+00:00\",\"archived\":false,\"archived_at\":null,\"number\":22,\"name\":\"John Doe\",\"email\":\"john-14@doe.test\",\"deposit_type\":\"default\",\"deposit_value\":0.0,\"discount_percentage\":0.0,\"legal_type\":\"person\",\"email_marketing_consented\":false,\"email_marketing_consent_updated_at\":null,\"properties\":{},\"tag_list\":[],\"stripe_id\":null,\"merge_suggestion_customer_id\":null,\"tax_region_id\":null},\"relationships\":{}},{\"id\":\"a46f0cf0-28f4-4bdb-b387-f12a70e33df8\",\"type\":\"customers\",\"attributes\":{\"created_at\":\"2025-03-27T14:54:13.518376+00:00\",\"updated_at\":\"2025-03-27T14:54:13.518376+00:00\",\"archived\":false,\"archived_at\":null,\"number\":23,\"name\":\"John Doe\",\"email\":\"john-15@doe.test\",\"deposit_type\":\"default\",\"deposit_value\":0.0,\"discount_percentage\":0.0,\"legal_type\":\"person\",\"email_marketing_consented\":false,\"email_marketing_consent_updated_at\":null,\"properties\":{},\"tag_list\":[],\"stripe_id\":null,\"merge_suggestion_customer_id\":null,\"tax_region_id\":null},\"relationships\":{}},{\"id\":\"911edebf-aa37-47fb-87d1-0bfeec2836ae\",\"type\":\"customers\",\"attributes\":{\"created_at\":\"2025-03-27T14:54:13.541965+00:00\",\"updated_at\":\"2025-03-27T14:54:13.541965+00:00\",\"archived\":false,\"archived_at\":null,\"number\":24,\"name\":\"John Doe\",\"email\":\"john-16@doe.test\",\"deposit_type\":\"default\",\"deposit_value\":0.0,\"discount_percentage\":0.0,\"legal_type\":\"person\",\"email_marketing_consented\":false,\"email_marketing_consent_updated_at\":null,\"properties\":{},\"tag_list\":[],\"stripe_id\":null,\"merge_suggestion_customer_id\":null,\"tax_region_id\":null},\"relationships\":{}},{\"id\":\"24d2b3f7-b7b2-4189-8ef1-9291eb5e61d3\",\"type\":\"customers\",\"attributes\":{\"created_at\":\"2025-03-27T14:54:13.562622+00:00\",\"updated_at\":\"2025-03-27T14:54:13.562622+00:00\",\"archived\":false,\"archived_at\":null,\"number\":25,\"name\":\"John Doe\",\"email\":\"john-17@doe.test\",\"deposit_type\":\"default\",\"deposit_value\":0.0,\"discount_percentage\":0.0,\"legal_type\":\"person\",\"email_marketing_consented\":false,\"email_marketing_consent_updated_at\":null,\"properties\":{},\"tag_list\":[],\"stripe_id\":null,\"merge_suggestion_customer_id\":null,\"tax_region_id\":null},\"relationships\":{}}],\"meta\":{\"stats\":{\"total\":{\"count\":38}}}}"
+        }
+      },
+      "recorded_at": "Wed, 09 Jul 2025 12:28:43 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.3.1"
+}
