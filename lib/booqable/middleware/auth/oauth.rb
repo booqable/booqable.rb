@@ -52,7 +52,7 @@ module Booqable
         def call(env)
           @token = @client.get_access_token_from_hash(@read_token.call)
 
-          if @token.expired?
+          if @token.expired? || @token.expires_at.nil?
             @token = refresh_token!
           end
 
