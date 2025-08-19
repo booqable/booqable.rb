@@ -6,7 +6,7 @@ describe Booqable::ResourceProxy do
   before do
     Booqable.configure do |config|
       config.api_domain = "booqable.test"
-      config.company = "demo"
+      config.company_id = "demo"
       config.api_key = test_api_key
     end
   end

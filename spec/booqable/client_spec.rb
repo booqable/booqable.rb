@@ -6,7 +6,7 @@ describe Booqable::Client do
       client = Booqable::Client.new(
         api_domain: "booqable.test",
         api_key: test_api_key,
-        company: nil
+        company_id: nil
       )
 
       expect { client.send(:api_endpoint) }.to raise_error(Booqable::CompanyRequired)
@@ -16,7 +16,7 @@ describe Booqable::Client do
       client = Booqable::Client.new(
         api_domain: "booqable.test",
         api_key: test_api_key,
-        company: ""
+        company_id: ""
       )
 
       expect { client.send(:api_endpoint) }.to raise_error(Booqable::CompanyRequired)
@@ -133,7 +133,7 @@ describe Booqable::Client do
       Booqable.reset!
       Booqable.configure do |config|
         config.api_domain = "booqable.test"
-        config.company = "demo"
+        config.company_id = "demo"
         config.api_version = "4"
       end
     end
@@ -301,7 +301,7 @@ describe Booqable::Client do
     describe "when oauth authenticated" do
       it "makes authenticated calls" do
         client = Booqable::Client.new(
-          company: "demo",
+          company_id: "demo",
           api_domain: "booqable.test",
           client_id: test_client_id,
           client_secret: test_client_secret,
@@ -328,7 +328,7 @@ describe Booqable::Client do
         stored_token = nil
 
         client = Booqable::Client.new(
-          company: "demo",
+          company_id: "demo",
           api_domain: "booqable.test",
           client_id: test_client_id,
           client_secret: test_client_secret,
@@ -379,7 +379,7 @@ describe Booqable::Client do
 
       it "handles OAuth2 errors during token refresh" do
         client = Booqable::Client.new(
-          company: "demo",
+          company_id: "demo",
           api_domain: "booqable.test",
           client_id: test_client_id,
           client_secret: test_client_secret,
@@ -424,7 +424,7 @@ describe Booqable::Client do
 
       it "injects oauth middleware when oauth authenticated" do
         client = Booqable::Client.new(
-          company: "demo",
+          company_id: "demo",
           api_domain: "booqable.test",
           client_id: test_client_id,
           client_secret: test_client_secret,
@@ -445,7 +445,7 @@ describe Booqable::Client do
 
       it "does not inject oauth middleware when not oauth authenticated" do
         client = Booqable::Client.new(
-          company: "demo",
+          company_id: "demo",
           api_domain: "booqable.test",
           api_key: test_api_key
         )
@@ -477,7 +477,7 @@ describe Booqable::Client do
       describe "with ES256 algorithm" do
         it "makes authenticated calls with ES256" do
           client = Booqable::Client.new(
-            company: "demo",
+            company_id: "demo",
             api_domain: "booqable.test",
             single_use_token_company_id: test_single_use_token_company_id,
             single_use_token_user_id: test_single_use_token_user_id,
@@ -498,7 +498,7 @@ describe Booqable::Client do
 
         it "generates valid JWT tokens with ES256" do
           client = Booqable::Client.new(
-            company: "demo",
+            company_id: "demo",
             api_domain: "booqable.test",
             single_use_token_company_id: test_single_use_token_company_id,
             single_use_token_user_id: test_single_use_token_user_id,
@@ -518,7 +518,7 @@ describe Booqable::Client do
       describe "with RS256 algorithm" do
         it "makes authenticated calls with RS256" do
           client = Booqable::Client.new(
-            company: "demo",
+            company_id: "demo",
             api_domain: "booqable.test",
             single_use_token_company_id: test_single_use_token_company_id,
             single_use_token_user_id: test_single_use_token_user_id,
@@ -539,7 +539,7 @@ describe Booqable::Client do
 
         it "generates valid JWT tokens with RS256" do
           client = Booqable::Client.new(
-            company: "demo",
+            company_id: "demo",
             api_domain: "booqable.test",
             single_use_token_company_id: test_single_use_token_company_id,
             single_use_token_user_id: test_single_use_token_user_id,
@@ -559,7 +559,7 @@ describe Booqable::Client do
       describe "with HS256 algorithm" do
         it "makes authenticated calls with HS256" do
           client = Booqable::Client.new(
-            company: "demo",
+            company_id: "demo",
             api_domain: "booqable.test",
             single_use_token_company_id: test_single_use_token_company_id,
             single_use_token_user_id: test_single_use_token_user_id,
@@ -580,7 +580,7 @@ describe Booqable::Client do
 
         it "generates valid JWT tokens with HS256" do
           client = Booqable::Client.new(
-            company: "demo",
+            company_id: "demo",
             api_domain: "booqable.test",
             single_use_token_company_id: test_single_use_token_company_id,
             single_use_token_user_id: test_single_use_token_user_id,
@@ -600,7 +600,7 @@ describe Booqable::Client do
       describe "JWT payload validation" do
         it "includes required claims in JWT payload" do
           client = Booqable::Client.new(
-            company: "demo",
+            company_id: "demo",
             api_domain: "booqable.test",
             single_use_token_company_id: test_single_use_token_company_id,
             single_use_token_user_id: test_single_use_token_user_id,
@@ -639,7 +639,7 @@ describe Booqable::Client do
         it "raises error when algorithm is missing" do
           expect do
             client = Booqable::Client.new(
-              company: "demo",
+              company_id: "demo",
               api_domain: "booqable.test",
               single_use_token_company_id: test_single_use_token_company_id,
               single_use_token_user_id: test_single_use_token_user_id,
@@ -653,7 +653,7 @@ describe Booqable::Client do
         it "raises error when company_id is missing" do
           expect do
             client = Booqable::Client.new(
-              company: "demo",
+              company_id: "demo",
               api_domain: "booqable.test",
               single_use_token_user_id: test_single_use_token_user_id,
               single_use_token_algorithm: "ES256",
@@ -667,7 +667,7 @@ describe Booqable::Client do
         it "raises error when user_id is missing" do
           expect do
             client = Booqable::Client.new(
-              company: "demo",
+              company_id: "demo",
               api_domain: "booqable.test",
               single_use_token_company_id: test_single_use_token_company_id,
               single_use_token_algorithm: "ES256",
@@ -681,7 +681,7 @@ describe Booqable::Client do
         it "raises error when private_key is missing" do
           expect do
             client = Booqable::Client.new(
-              company: "demo",
+              company_id: "demo",
               api_domain: "booqable.test",
               single_use_token_company_id: test_single_use_token_company_id,
               single_use_token_user_id: test_single_use_token_user_id,
@@ -698,7 +698,7 @@ describe Booqable::Client do
   describe ".agent" do
     before do
       Booqable.reset!
-      Booqable.company = "demo"
+      Booqable.company_id = "demo"
     end
 
     it "acts like a Sawyer agent" do
@@ -718,7 +718,7 @@ describe Booqable::Client do
 
       client = Booqable.client
       client.api_key = test_api_key
-      client.company = "demo"
+      client.company_id = "demo"
       client.api_domain = "booqable.test"
 
       expect(client.last_response).to be_nil
@@ -730,7 +730,7 @@ describe Booqable::Client do
   describe ".get", :vcr do
     before(:each) do
       Booqable.reset!
-      Booqable.company = "demo"
+      Booqable.company_id = "demo"
       Booqable.api_domain = "booqable.test"
     end
 
@@ -752,7 +752,7 @@ describe Booqable::Client do
   describe ".head", :vcr do
     before(:each) do
       Booqable.reset!
-      Booqable.company = "demo"
+      Booqable.company_id = "demo"
       Booqable.api_domain = "booqable.test"
     end
 
@@ -774,7 +774,7 @@ describe Booqable::Client do
   describe "when making requests" do
     before do
       Booqable.reset!
-      Booqable.company = "demo"
+      Booqable.company_id = "demo"
       Booqable.api_domain = "booqable.test"
       @client = Booqable.client
     end
@@ -875,7 +875,7 @@ describe Booqable::Client do
       Booqable.configure do |config|
         config.no_retries = true
         config.auto_paginate = true
-        config.company = "demo"
+        config.company_id = "demo"
         config.api_domain = "booqable.test"
         config.per_page = 1
       end
@@ -899,7 +899,7 @@ describe Booqable::Client do
       Booqable.reset!
       Booqable.configure do |config|
         config.no_retries = true
-        config.company = "demo"
+        config.company_id = "demo"
         config.api_domain = "booqable.test"
       end
       VCR.turn_off!
@@ -1516,7 +1516,7 @@ describe Booqable::Client do
       Booqable.reset!
       Booqable.configure do |config|
         config.api_domain = "booqable.test"
-        config.company = "demo"
+        config.company_id = "demo"
         config.api_version = "4"
       end
     end
@@ -1577,7 +1577,7 @@ describe Booqable::Client do
     it "initializes logger when debug mode is enabled" do
       client = Booqable::Client.new(
         api_domain: "booqable.test",
-        company: "demo",
+        company_id: "demo",
         api_key: test_api_key,
         debug: true
       )
@@ -1590,7 +1590,7 @@ describe Booqable::Client do
     it "returns nil for logger when debug mode is disabled" do
       client = Booqable::Client.new(
         api_domain: "booqable.test",
-        company: "demo",
+        company_id: "demo",
         api_key: test_api_key,
         debug: false
       )
@@ -1604,7 +1604,7 @@ describe Booqable::Client do
     it "parses convenience headers correctly" do
       client = Booqable::Client.new(
         api_domain: "booqable.test",
-        company: "demo",
+        company_id: "demo",
         api_key: test_api_key
       )
 
@@ -1628,7 +1628,7 @@ describe Booqable::Client do
     it "handles response encoding from charset in content-type header" do
       client = Booqable::Client.new(
         api_domain: "booqable.test",
-        company: "demo",
+        company_id: "demo",
         api_key: test_api_key
       )
 
@@ -1651,7 +1651,7 @@ describe Booqable::Client do
     it "returns response data unchanged when no charset in content-type" do
       client = Booqable::Client.new(
         api_domain: "booqable.test",
-        company: "demo",
+        company_id: "demo",
         api_key: test_api_key
       )
 
@@ -1669,7 +1669,7 @@ describe Booqable::Client do
     it "returns response data unchanged when data is not a string" do
       client = Booqable::Client.new(
         api_domain: "booqable.test",
-        company: "demo",
+        company_id: "demo",
         api_key: test_api_key
       )
 

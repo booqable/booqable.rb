@@ -43,7 +43,7 @@ API methods are available as module methods (consuming module-level configuratio
 # Provide authentication credentials
 Booqable.configure do |c|
   c.api_key = 'your_api_key_here'
-  c.company = 'your_company_id'
+  c.company_id = 'your_company_id'
 end
 
 # Fetch orders
@@ -56,7 +56,7 @@ or
 # Create a client instance
 client = Booqable::Client.new(
   api_key: 'your_api_key_here',
-  company: 'your_company_id'
+  company_id: 'your_company_id'
 )
 
 # Fetch orders
@@ -74,7 +74,7 @@ The simplest way to authenticate is with an API key:
 ```ruby
 Booqable.configure do |c|
   c.api_key = 'your_api_key_here'
-  c.company = 'your_company_id'
+  c.company_id = 'your_company_id'
 end
 ```
 
@@ -88,7 +88,7 @@ For applications that need to act on behalf of multiple users:
 client = Booqable::Client.new(
   client_id: 'your_oauth_client_id',
   client_secret: 'your_oauth_client_secret',
-  company: 'your_company_id',
+  company_id: 'your_company_id',
   read_token: -> { 
     # Return stored token hash
     JSON.parse(File.read('token.json'))
@@ -114,7 +114,7 @@ client = Booqable::Client.new(
   single_use_token_secret: 'your_signing_secret',
   single_use_token_company_id: 'company_uuid',
   single_use_token_user_id: 'user_uuid',
-  company: 'your_company_id'
+  company_id: 'your_company_id'
 )
 ```
 
@@ -138,7 +138,7 @@ Booqable is highly configurable to suit different environments and use cases:
 ```ruby
 Booqable.configure do |c|
   c.api_key = 'your_api_key_here'
-  c.company = 'your_company_id'
+  c.company_id = 'your_company_id'
   c.api_domain = 'booqable.com'        # Default
   c.api_version = 4                    # Default
   c.per_page = 25                      # Default pagination size
@@ -151,7 +151,7 @@ end
 ```ruby
 client = Booqable::Client.new(
   api_key: 'your_api_key_here',
-  company: 'your_company_id',
+  company_id: 'your_company_id',
   per_page: 50,
   auto_paginate: false
 )

@@ -8,7 +8,7 @@ module Booqable
   #
   # @example Environment variable configuration
   #   ENV["BOOQABLE_API_KEY"] = "your_api_key"
-  #   ENV["BOOQABLE_COMPANY"] = "your_company_id"
+  #   ENV["BOOQABLE_COMPANY_ID"] = "your_company_id"
   #   ENV["BOOQABLE_PER_PAGE"] = "50"
   module Default
     # Default User Agent header string
@@ -79,10 +79,10 @@ module Booqable
         ENV.fetch("BOOQABLE_CLIENT_SECRET", nil)
       end
 
-      # Default company from ENV
+      # Default company ID from ENV
       # @return [String, nil] Company identifier
-      def company
-        ENV.fetch("BOOQABLE_COMPANY", nil)
+      def company_id
+        ENV.fetch("BOOQABLE_COMPANY_ID", nil)
       end
 
       # Default redirect URI for OAuth from ENV

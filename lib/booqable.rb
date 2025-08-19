@@ -31,7 +31,7 @@ require_relative "booqable/client"
 # @example Basic usage
 #   Booqable.configure do |config|
 #     config.api_key = "your_api_key"
-#     config.company = "your_company"
+#     config.company_id = "your_company"
 #   end
 #
 #   orders = Booqable.orders.list(include: "customer,items")

@@ -365,8 +365,8 @@ module Booqable
     def api_endpoint
       @api_endpoint ||= begin
                           raise UnsupportedAPIVersion unless %w[4 boomerang].include?(api_version.to_s)
-                          raise CompanyRequired if company.nil? || company.empty?
-                          Addressable::URI.join("#{api_protocol}://#{company}.#{api_domain}/", "api/", api_version.to_s).to_s
+                          raise CompanyRequired if company_id.nil? || company_id.empty?
+                          Addressable::URI.join("#{api_protocol}://#{company_id}.#{api_domain}/", "api/", api_version.to_s).to_s
                         end
     end
 

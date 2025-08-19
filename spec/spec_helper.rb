@@ -125,8 +125,8 @@ def test_endpoint
   ENV.fetch "BOOQABLE_API_ENDPOINT", "http://demo.booqable.test"
 end
 
-def api_key_client(api_key: test_api_key, company: test_company)
-  Booqable::Client.new(api_key:, company:, api_domain: "booqable.test", no_retries: true)
+def api_key_client(api_key: test_api_key, company_id: test_company)
+  Booqable::Client.new(api_key:, company_id:, api_domain: "booqable.test", no_retries: true)
 end
 
 def stub_delete(url)
@@ -157,7 +157,7 @@ def booqable_defaults
   {
 
     api_version: "4",
-    company: "demo",
+    company_id: "demo",
     api_domain: "booqable.test"
   }
 end

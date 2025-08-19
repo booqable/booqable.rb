@@ -10,14 +10,14 @@ module Booqable
   # @example Initialize with API key
   #   client = Booqable::Client.new(
   #     api_key: "your_api_key",
-  #     company: "your_company"
+  #     company_id: "your_company_id"
   #   )
   #
   # @example Initialize with OAuth
   #   client = Booqable::Client.new(
   #     client_id: "your_client_id",
   #     client_secret: "your_client_secret",
-  #     company: "your_company"
+  #     company_id: "your_company_id"
   #   )
   #
   # @see https://developers.booqable.com/

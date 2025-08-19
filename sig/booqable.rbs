@@ -10,7 +10,7 @@ module Booqable
     @auto_paginate: bool?
     @client_id: String?
     @client_secret: String?
-    @company: String?
+    @company_id: String?
     @connection_options: Hash[Symbol, untyped]?
     @debug: bool?
     @default_media_type: String?
@@ -38,7 +38,7 @@ module Booqable
     attr_accessor auto_paginate: bool?
     attr_accessor client_id: String?
     attr_accessor client_secret: String?
-    attr_accessor company: String?
+    attr_accessor company_id: String?
     attr_accessor connection_options: Hash[Symbol, untyped]?
     attr_accessor debug: bool?
     attr_accessor default_media_type: String?
@@ -281,7 +281,7 @@ module Booqable
       def auto_paginate: () -> String?
       def client_id: () -> String?
       def client_secret: () -> String?
-      def company: () -> String?
+      def company_id: () -> String?
       def redirect_uri: () -> String?
       def connection_options: () -> Hash[Symbol, untyped]?
       def default_media_type: () -> String
