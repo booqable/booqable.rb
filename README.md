@@ -238,6 +238,10 @@ new_order.status  # => 'draft'
 # Update order
 updated_order = Booqable.orders.update('order_id', status: 'reserved')
 updated_order.status  # => 'reserved'
+
+# Delete order
+deleted_order = Booqable.orders.delete('order_id')
+deleted_order.id  # => 'order_id'
 ```
 
 ### Customers
@@ -257,6 +261,10 @@ customer = Booqable.customers.create(
 
 # Update customer
 Booqable.customers.update('customer_id', name: 'Jane Doe')
+
+# Delete customer
+deleted_customer = Booqable.customers.delete('customer_id')
+deleted_customer.id  # => 'customer_id'
 ```
 
 ### Products
@@ -277,6 +285,10 @@ product = Booqable.products.create(
   type: 'trackable',
   base_price_in_cents: 50000
 )
+
+# Delete product
+deleted_product = Booqable.products.delete('product_id')
+deleted_product.id  # => 'product_id'
 ```
 
 ### Available resources

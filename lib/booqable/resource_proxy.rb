@@ -23,6 +23,9 @@ module Booqable
   #
   #   # Update an existing order
   #   updated_order = orders.update("123", status: "reserved")
+  #
+  #   # Delete an existing order
+  #   orders.delete("123")
   class ResourceProxy
     # Initialize a new resource proxy
     #
@@ -105,6 +108,21 @@ module Booqable
     #   updated_order = orders.update("123", status: "reserved")
     def update(id, attrs = {})
       response = request :put, "#{@resource}/#{id}", { data: { type: @resource, id: id, attributes: attrs } }
+      response.data
+    end
+
+    # Delete an existing resource
+    #
+    # Deletes a resource by its unique identifier.
+    #
+    # @param id [String, Integer] The unique identifier of the resource to delete
+    # @return [Object] The deleted resource data
+    # @raise [Booqable::NotFound] If the resource doesn't exist
+    #
+    # @example Delete an order
+    #   deleted_order = orders.delete("123")
+    def delete(id)
+      response = request :delete, "#{@resource}/#{id}", {}
       response.data
     end
 
