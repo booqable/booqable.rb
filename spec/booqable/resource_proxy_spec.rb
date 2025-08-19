@@ -143,6 +143,19 @@ describe Booqable::ResourceProxy do
       end
     end
 
+    describe "#delete", :vcr do
+      let(:order_id) { "61c78159-fecc-454c-ae83-d88f704dfb93" }
+
+      it "deletes an existing order" do
+        result = Booqable.orders.delete(order_id)
+        expect(result.id).to eq(order_id)
+      end
+
+      it "raises error for invalid order id" do
+        expect { Booqable.orders.delete("invalid-id") }.to raise_error(Booqable::NotFound)
+      end
+    end
+
     describe "includes functionality", :vcr do
       let(:order_id) { "3e037580-3d7a-4d23-876c-f0ba1a481bb7" }
 
@@ -238,6 +251,12 @@ describe Booqable::ResourceProxy do
         expect(customer.name).to include("Test Customer")
         expect(customer.email).to include("test")
       end
+
+      it "can delete customers", :vcr do
+        customer_id = "1dc7781b-24c9-4405-a48b-5f2f970fb75d"
+        result = Booqable.customers.delete(customer_id)
+        expect(result.id).to eq(customer_id)
+      end
     end
   end
 
@@ -294,6 +313,7 @@ describe Booqable::ResourceProxy do
         expect(carriers_proxy).to respond_to(:find)
         expect(carriers_proxy).to respond_to(:create)
         expect(carriers_proxy).to respond_to(:update)
+        expect(carriers_proxy).to respond_to(:delete)
       end
 
       it "works with parameters and includes through alias", :vcr do
@@ -354,6 +374,7 @@ describe Booqable::ResourceProxy do
         expect(payment_options_proxy).to respond_to(:find)
         expect(payment_options_proxy).to respond_to(:create)
         expect(payment_options_proxy).to respond_to(:update)
+        expect(payment_options_proxy).to respond_to(:delete)
       end
 
       it "works with parameters and includes through alias", :vcr do

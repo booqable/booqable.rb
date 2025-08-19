@@ -1,0 +1,66 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "delete",
+        "uri": "http://<BOOQABLE_COMPANY>.booqable.test/api/4/orders/invalid-id",
+        "body": {
+          "encoding": "UTF-8",
+          "string": "{\"headers\":{\"accept\":\"application/vnd.api+json\",\"content_type\":\"application/vnd.api+json\",\"user_agent\":\"Booqable Ruby Gem 0.1.0\"}}"
+        },
+        "headers": {
+          "Accept": [
+            "application/vnd.api+json"
+          ],
+          "Content-Type": [
+            "application/vnd.api+json"
+          ],
+          "User-Agent": [
+            "Booqable Ruby Gem 0.1.0"
+          ],
+          "Authorization": [
+            "Bearer <BOOQABLE_API_KEY>"
+          ],
+          "Accept-Encoding": [
+            "gzip;q=1.0,deflate;q=0.6,identity;q=0.3"
+          ]
+        }
+      },
+      "response": {
+        "status": {
+          "code": 404,
+          "message": "Not Found"
+        },
+        "headers": {
+          "Content-Length": [
+            "8939"
+          ],
+          "Content-Type": [
+            "application/json; charset=UTF-8"
+          ],
+          "Server-Timing": [
+            "sql.active_record;dur=4.17, instantiation.active_record;dur=0.08"
+          ],
+          "Vary": [
+            "Origin"
+          ],
+          "X-Request-Id": [
+            "acc900f3-0f13-4f25-b776-3d081d04ab57"
+          ],
+          "X-Runtime": [
+            "0.099072"
+          ],
+          "Date": [
+            "Tue, 19 Aug 2025 12:23:53 GMT"
+          ]
+        },
+        "body": {
+          "encoding": "UTF-8",
+          "string": "{\"status\":404,\"error\":\"Not Found\",\"exception\":\"#\\u003cActionController::RoutingError: No route matches [DELETE] \\\"/api/4/orders/invalid-id\\\"\\u003e\",\"traces\":{\"Application Trace\":[],\"Framework Trace\":[{\"exception_object_id\":127960,\"id\":0,\"trace\":\"actionpack (7.2.2.1) lib/action_dispatch/middleware/debug_exceptions.rb:35:in 'ActionDispatch::DebugExceptions#call'\"},{\"exception_object_id\":127960,\"id\":1,\"trace\":\"actionpack (7.2.2.1) lib/action_dispatch/middleware/show_exceptions.rb:32:in 'ActionDispatch::ShowExceptions#call'\"},{\"exception_object_id\":127960,\"id\":2,\"trace\":\"rescue_registry (1.0.0) lib/rescue_registry/action_dispatch/show_exceptions.rb:11:in 'RescueRegistry::ActionDispatch::ShowExceptions#call'\"},{\"exception_object_id\":127960,\"id\":3,\"trace\":\"rescue_registry (1.0.0) lib/rescue_registry/reset_context.rb:9:in 'RescueRegistry::ResetContext#call'\"},{\"exception_object_id\":127960,\"id\":4,\"trace\":\"railties (7.2.2.1) lib/rails/rack/logger.rb:41:in 'Rails::Rack::Logger#call_app'\"},{\"exception_object_id\":127960,\"id\":5,\"trace\":\"railties (7.2.2.1) lib/rails/rack/logger.rb:29:in 'Rails::Rack::Logger#call'\"},{\"exception_object_id\":127960,\"id\":6,\"trace\":\"sprockets-rails (3.5.2) lib/sprockets/rails/quiet_assets.rb:17:in 'Sprockets::Rails::QuietAssets#call'\"},{\"exception_object_id\":127960,\"id\":7,\"trace\":\"actionpack (7.2.2.1) lib/action_dispatch/middleware/remote_ip.rb:96:in 'ActionDispatch::RemoteIp#call'\"},{\"exception_object_id\":127960,\"id\":8,\"trace\":\"request_store (1.7.0) lib/request_store/middleware.rb:19:in 'RequestStore::Middleware#call'\"},{\"exception_object_id\":127960,\"id\":9,\"trace\":\"actionpack (7.2.2.1) lib/action_dispatch/middleware/request_id.rb:33:in 'ActionDispatch::RequestId#call'\"},{\"exception_object_id\":127960,\"id\":10,\"trace\":\"rack (2.2.17) lib/rack/method_override.rb:24:in 'Rack::MethodOverride#call'\"},{\"exception_object_id\":127960,\"id\":11,\"trace\":\"rack (2.2.17) lib/rack/runtime.rb:22:in 'Rack::Runtime#call'\"},{\"exception_object_id\":127960,\"id\":12,\"trace\":\"activesupport (7.2.2.1) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in 'ActiveSupport::Cache::Strategy::LocalCache::Middleware#call'\"},{\"exception_object_id\":127960,\"id\":13,\"trace\":\"actionpack (7.2.2.1) lib/action_dispatch/middleware/server_timing.rb:61:in 'block in ActionDispatch::ServerTiming#call'\"},{\"exception_object_id\":127960,\"id\":14,\"trace\":\"actionpack (7.2.2.1) lib/action_dispatch/middleware/server_timing.rb:26:in 'ActionDispatch::ServerTiming::Subscriber#collect_events'\"},{\"exception_object_id\":127960,\"id\":15,\"trace\":\"actionpack (7.2.2.1) lib/action_dispatch/middleware/server_timing.rb:60:in 'ActionDispatch::ServerTiming#call'\"},{\"exception_object_id\":127960,\"id\":16,\"trace\":\"actionpack (7.2.2.1) lib/action_dispatch/middleware/executor.rb:16:in 'ActionDispatch::Executor#call'\"},{\"exception_object_id\":127960,\"id\":17,\"trace\":\"actionpack (7.2.2.1) lib/action_dispatch/middleware/static.rb:27:in 'ActionDispatch::Static#call'\"},{\"exception_object_id\":127960,\"id\":18,\"trace\":\"rack (2.2.17) lib/rack/sendfile.rb:110:in 'Rack::Sendfile#call'\"},{\"exception_object_id\":127960,\"id\":19,\"trace\":\"rack (2.2.17) lib/rack/events.rb:112:in 'Rack::Events#call'\"},{\"exception_object_id\":127960,\"id\":20,\"trace\":\"rack-cors (2.0.2) lib/rack/cors.rb:102:in 'Rack::Cors#call'\"},{\"exception_object_id\":127960,\"id\":21,\"trace\":\"shakapacker (8.3.0) lib/shakapacker/dev_server_proxy.rb:25:in 'Shakapacker::DevServerProxy#perform_request'\"},{\"exception_object_id\":127960,\"id\":22,\"trace\":\"rack-proxy (0.7.7) lib/rack/proxy.rb:87:in 'Rack::Proxy#call'\"},{\"exception_object_id\":127960,\"id\":23,\"trace\":\"railties (7.2.2.1) lib/rails/engine.rb:535:in 'Rails::Engine#call'\"},{\"exception_object_id\":127960,\"id\":24,\"trace\":\"puma (6.6.1) lib/puma/configuration.rb:279:in 'Puma::Configuration::ConfigMiddleware#call'\"},{\"exception_object_id\":127960,\"id\":25,\"trace\":\"puma (6.6.1) lib/puma/request.rb:99:in 'block in Puma::Request#handle_request'\"},{\"exception_object_id\":127960,\"id\":26,\"trace\":\"puma (6.6.1) lib/puma/thread_pool.rb:390:in 'Puma::ThreadPool#with_force_shutdown'\"},{\"exception_object_id\":127960,\"id\":27,\"trace\":\"puma (6.6.1) lib/puma/request.rb:98:in 'Puma::Request#handle_request'\"},{\"exception_object_id\":127960,\"id\":28,\"trace\":\"puma (6.6.1) lib/puma/server.rb:472:in 'Puma::Server#process_client'\"},{\"exception_object_id\":127960,\"id\":29,\"trace\":\"puma (6.6.1) lib/puma/server.rb:254:in 'block in Puma::Server#run'\"},{\"exception_object_id\":127960,\"id\":30,\"trace\":\"puma (6.6.1) lib/puma/thread_pool.rb:167:in 'block in Puma::ThreadPool#spawn_thread'\"}],\"Full Trace\":[{\"exception_object_id\":127960,\"id\":0,\"trace\":\"actionpack (7.2.2.1) lib/action_dispatch/middleware/debug_exceptions.rb:35:in 'ActionDispatch::DebugExceptions#call'\"},{\"exception_object_id\":127960,\"id\":1,\"trace\":\"actionpack (7.2.2.1) lib/action_dispatch/middleware/show_exceptions.rb:32:in 'ActionDispatch::ShowExceptions#call'\"},{\"exception_object_id\":127960,\"id\":2,\"trace\":\"rescue_registry (1.0.0) lib/rescue_registry/action_dispatch/show_exceptions.rb:11:in 'RescueRegistry::ActionDispatch::ShowExceptions#call'\"},{\"exception_object_id\":127960,\"id\":3,\"trace\":\"rescue_registry (1.0.0) lib/rescue_registry/reset_context.rb:9:in 'RescueRegistry::ResetContext#call'\"},{\"exception_object_id\":127960,\"id\":4,\"trace\":\"railties (7.2.2.1) lib/rails/rack/logger.rb:41:in 'Rails::Rack::Logger#call_app'\"},{\"exception_object_id\":127960,\"id\":5,\"trace\":\"railties (7.2.2.1) lib/rails/rack/logger.rb:29:in 'Rails::Rack::Logger#call'\"},{\"exception_object_id\":127960,\"id\":6,\"trace\":\"sprockets-rails (3.5.2) lib/sprockets/rails/quiet_assets.rb:17:in 'Sprockets::Rails::QuietAssets#call'\"},{\"exception_object_id\":127960,\"id\":7,\"trace\":\"actionpack (7.2.2.1) lib/action_dispatch/middleware/remote_ip.rb:96:in 'ActionDispatch::RemoteIp#call'\"},{\"exception_object_id\":127960,\"id\":8,\"trace\":\"request_store (1.7.0) lib/request_store/middleware.rb:19:in 'RequestStore::Middleware#call'\"},{\"exception_object_id\":127960,\"id\":9,\"trace\":\"actionpack (7.2.2.1) lib/action_dispatch/middleware/request_id.rb:33:in 'ActionDispatch::RequestId#call'\"},{\"exception_object_id\":127960,\"id\":10,\"trace\":\"rack (2.2.17) lib/rack/method_override.rb:24:in 'Rack::MethodOverride#call'\"},{\"exception_object_id\":127960,\"id\":11,\"trace\":\"rack (2.2.17) lib/rack/runtime.rb:22:in 'Rack::Runtime#call'\"},{\"exception_object_id\":127960,\"id\":12,\"trace\":\"activesupport (7.2.2.1) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in 'ActiveSupport::Cache::Strategy::LocalCache::Middleware#call'\"},{\"exception_object_id\":127960,\"id\":13,\"trace\":\"actionpack (7.2.2.1) lib/action_dispatch/middleware/server_timing.rb:61:in 'block in ActionDispatch::ServerTiming#call'\"},{\"exception_object_id\":127960,\"id\":14,\"trace\":\"actionpack (7.2.2.1) lib/action_dispatch/middleware/server_timing.rb:26:in 'ActionDispatch::ServerTiming::Subscriber#collect_events'\"},{\"exception_object_id\":127960,\"id\":15,\"trace\":\"actionpack (7.2.2.1) lib/action_dispatch/middleware/server_timing.rb:60:in 'ActionDispatch::ServerTiming#call'\"},{\"exception_object_id\":127960,\"id\":16,\"trace\":\"actionpack (7.2.2.1) lib/action_dispatch/middleware/executor.rb:16:in 'ActionDispatch::Executor#call'\"},{\"exception_object_id\":127960,\"id\":17,\"trace\":\"actionpack (7.2.2.1) lib/action_dispatch/middleware/static.rb:27:in 'ActionDispatch::Static#call'\"},{\"exception_object_id\":127960,\"id\":18,\"trace\":\"rack (2.2.17) lib/rack/sendfile.rb:110:in 'Rack::Sendfile#call'\"},{\"exception_object_id\":127960,\"id\":19,\"trace\":\"rack (2.2.17) lib/rack/events.rb:112:in 'Rack::Events#call'\"},{\"exception_object_id\":127960,\"id\":20,\"trace\":\"rack-cors (2.0.2) lib/rack/cors.rb:102:in 'Rack::Cors#call'\"},{\"exception_object_id\":127960,\"id\":21,\"trace\":\"shakapacker (8.3.0) lib/shakapacker/dev_server_proxy.rb:25:in 'Shakapacker::DevServerProxy#perform_request'\"},{\"exception_object_id\":127960,\"id\":22,\"trace\":\"rack-proxy (0.7.7) lib/rack/proxy.rb:87:in 'Rack::Proxy#call'\"},{\"exception_object_id\":127960,\"id\":23,\"trace\":\"railties (7.2.2.1) lib/rails/engine.rb:535:in 'Rails::Engine#call'\"},{\"exception_object_id\":127960,\"id\":24,\"trace\":\"puma (6.6.1) lib/puma/configuration.rb:279:in 'Puma::Configuration::ConfigMiddleware#call'\"},{\"exception_object_id\":127960,\"id\":25,\"trace\":\"puma (6.6.1) lib/puma/request.rb:99:in 'block in Puma::Request#handle_request'\"},{\"exception_object_id\":127960,\"id\":26,\"trace\":\"puma (6.6.1) lib/puma/thread_pool.rb:390:in 'Puma::ThreadPool#with_force_shutdown'\"},{\"exception_object_id\":127960,\"id\":27,\"trace\":\"puma (6.6.1) lib/puma/request.rb:98:in 'Puma::Request#handle_request'\"},{\"exception_object_id\":127960,\"id\":28,\"trace\":\"puma (6.6.1) lib/puma/server.rb:472:in 'Puma::Server#process_client'\"},{\"exception_object_id\":127960,\"id\":29,\"trace\":\"puma (6.6.1) lib/puma/server.rb:254:in 'block in Puma::Server#run'\"},{\"exception_object_id\":127960,\"id\":30,\"trace\":\"puma (6.6.1) lib/puma/thread_pool.rb:167:in 'block in Puma::ThreadPool#spawn_thread'\"}]}}"
+        }
+      },
+      "recorded_at": "Tue, 19 Aug 2025 12:23:53 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.3.1"
+}

@@ -1,0 +1,96 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "delete",
+        "uri": "http://<BOOQABLE_COMPANY>.booqable.test/api/4/orders/61c78159-fecc-454c-ae83-d88f704dfb93",
+        "body": {
+          "encoding": "UTF-8",
+          "string": "{\"headers\":{\"accept\":\"application/vnd.api+json\",\"content_type\":\"application/vnd.api+json\",\"user_agent\":\"Booqable Ruby Gem 0.1.0\"}}"
+        },
+        "headers": {
+          "Accept": [
+            "application/vnd.api+json"
+          ],
+          "Content-Type": [
+            "application/vnd.api+json"
+          ],
+          "User-Agent": [
+            "Booqable Ruby Gem 0.1.0"
+          ],
+          "Authorization": [
+            "Bearer <BOOQABLE_API_KEY>"
+          ],
+          "Accept-Encoding": [
+            "gzip;q=1.0,deflate;q=0.6,identity;q=0.3"
+          ]
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": "OK"
+        },
+        "headers": {
+          "Access-Control-Allow-Credentials": [
+            "false"
+          ],
+          "Cache-Control": [
+            "no-cache"
+          ],
+          "Content-Type": [
+            "application/json; charset=utf-8"
+          ],
+          "Referrer-Policy": [
+            "strict-origin-when-cross-origin"
+          ],
+          "Server-Timing": [
+            "sql.active_record;dur=15.23, instantiation.active_record;dur=0.12, start_processing.action_controller;dur=0.01, process_action.action_controller;dur=45.67"
+          ],
+          "Set-Cookie": [
+            "<SESSION_COOKIE>"
+          ],
+          "Vary": [
+            "Accept-Encoding, Origin"
+          ],
+          "X-Content-Type-Options": [
+            "nosniff"
+          ],
+          "X-Frame-Options": [
+            "SAMEORIGIN"
+          ],
+          "X-Permitted-Cross-Domain-Policies": [
+            "none"
+          ],
+          "X-Ratelimit-Limit": [
+            "50"
+          ],
+          "X-Ratelimit-Period": [
+            "60"
+          ],
+          "X-Ratelimit-Remaining": [
+            "49"
+          ],
+          "X-Request-Id": [
+            "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+          ],
+          "X-Runtime": [
+            "0.065432"
+          ],
+          "X-Xss-Protection": [
+            "0"
+          ],
+          "Date": [
+            "Mon, 19 Aug 2025 13:30:00 GMT"
+          ]
+        },
+        "body": {
+          "encoding": "ASCII-8BIT",
+          "string": "{\"data\":{\"id\":\"61c78159-fecc-454c-ae83-d88f704dfb93\",\"type\":\"orders\",\"attributes\":{\"created_at\":\"2025-07-09T12:28:41.116160+00:00\",\"updated_at\":\"2025-07-09T12:28:41.137982+00:00\",\"number\":null,\"status\":\"new\",\"statuses\":[\"new\"],\"status_counts\":{\"new\":0,\"concept\":0,\"reserved\":0,\"started\":0,\"stopped\":0},\"starts_at\":\"2024-01-01T00:00:00.000000+00:00\",\"stops_at\":\"2024-01-02T00:00:00.000000+00:00\",\"deposit_type\":\"percentage\",\"deposit_value\":100.0,\"entirely_started\":true,\"entirely_stopped\":false,\"location_shortage\":false,\"shortage\":false,\"payment_status\":\"paid\",\"override_period_restrictions\":false,\"has_signed_contract\":false,\"item_count\":0,\"tag_list\":[],\"properties\":{\"delivery_address\":null,\"billing_address\":null},\"amount_in_cents\":0,\"amount_paid_in_cents\":0,\"amount_to_be_paid_in_cents\":null,\"deposit_in_cents\":0,\"deposit_held_in_cents\":0,\"deposit_paid_in_cents\":0,\"deposit_to_be_paid_in_cents\":null,\"deposit_refunded_in_cents\":0,\"deposit_to_refund_in_cents\":0,\"total_in_cents\":0,\"total_paid_in_cents\":0,\"total_to_be_paid_in_cents\":0,\"total_discount_in_cents\":0,\"coupon_discount_in_cents\":0,\"discount_in_cents\":0,\"grand_total_in_cents\":0,\"grand_total_with_tax_in_cents\":0,\"paid_in_cents\":0,\"price_in_cents\":0,\"tax_in_cents\":0,\"to_be_paid_in_cents\":0,\"discount_type\":\"percentage\",\"discount_percentage\":0.0,\"billing_address_property_id\":null,\"delivery_address_property_id\":null,\"fulfillment_type\":\"pickup\",\"delivery_address\":null,\"customer_id\":null,\"tax_region_id\":null,\"coupon_id\":null,\"start_location_id\":\"0ddaa18d-a229-4cfd-a298-2020de1afdad\",\"stop_location_id\":\"0ddaa18d-a229-4cfd-a298-2020de1afdad\",\"order_delivery_rate_id\":null},\"relationships\":{}},\"meta\":{}}"
+        }
+      },
+      "recorded_at": "Mon, 19 Aug 2025 13:30:00 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.3.1"
+}
