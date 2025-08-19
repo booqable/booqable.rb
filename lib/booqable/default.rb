@@ -8,7 +8,7 @@ module Booqable
   #
   # @example Environment variable configuration
   #   ENV["BOOQABLE_API_KEY"] = "your_api_key"
-  #   ENV["BOOQABLE_COMPANY"] = "your_company"
+  #   ENV["BOOQABLE_COMPANY"] = "your_company_id"
   #   ENV["BOOQABLE_PER_PAGE"] = "50"
   module Default
     # Default User Agent header string
@@ -80,7 +80,7 @@ module Booqable
       end
 
       # Default company from ENV
-      # @return [String, nil] Company identifier/subdomain
+      # @return [String, nil] Company identifier
       def company
         ENV.fetch("BOOQABLE_COMPANY", nil)
       end
