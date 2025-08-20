@@ -380,7 +380,7 @@ module Booqable
   # Raised when a company slug is not set in Booqable configuration
   class CompanyRequired < ArgumentError
     def initialize
-      super("Company is required. Please set `company` in Booqable configuration. For demo.booqable.com use `config.company = 'demo'`")
+      super("Company ID is required. Please set `company_id` in Booqable configuration.")
     end
   end
 

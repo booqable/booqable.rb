@@ -127,7 +127,7 @@ describe Booqable::OAuthClient do
           client_secret: test_client_secret,
           redirect_uri: test_redirect_uri,
           api_domain: "booqable.test",
-          company: "demo"
+          company_id: "demo"
         )
 
         oauth_client = client.oauth_client
@@ -137,7 +137,7 @@ describe Booqable::OAuthClient do
       it "returns nil when not oauth authenticated" do
         client = Booqable::Client.new(
           api_domain: "booqable.test",
-          company: "demo"
+          company_id: "demo"
         )
 
         expect(client.oauth_client).to be_nil
@@ -149,7 +149,7 @@ describe Booqable::OAuthClient do
           client_secret: test_client_secret,
           redirect_uri: test_redirect_uri,
           api_domain: "booqable.test",
-          company: "demo"
+          company_id: "demo"
         )
 
         oauth_client1 = client.oauth_client
@@ -167,7 +167,7 @@ describe Booqable::OAuthClient do
           client_secret: test_client_secret,
           redirect_uri: test_redirect_uri,
           api_domain: "booqable.test",
-          company: "demo",
+          company_id: "demo",
           write_token: ->(token) { stored_token = token }
         )
 
@@ -193,7 +193,7 @@ describe Booqable::OAuthClient do
       it "raises error when oauth client is not available" do
         client = Booqable::Client.new(
           api_domain: "booqable.test",
-          company: "demo"
+          company_id: "demo"
         )
 
         expect { client.authenticate_with_code(test_code) }.to raise_error(NoMethodError)
@@ -213,7 +213,7 @@ describe Booqable::OAuthClient do
           client_secret: test_client_secret,
           redirect_uri: test_redirect_uri,
           api_domain: "booqable.test",
-          company: "demo",
+          company_id: "demo",
           read_token: -> { stored_token }
         )
 
@@ -228,7 +228,7 @@ describe Booqable::OAuthClient do
           client_secret: test_client_secret,
           redirect_uri: test_redirect_uri,
           api_domain: "booqable.test",
-          company: "demo",
+          company_id: "demo",
           write_token: ->(token) { stored_token = token }
         )
 
@@ -245,7 +245,7 @@ describe Booqable::OAuthClient do
           client_secret: test_client_secret,
           redirect_uri: test_redirect_uri,
           api_domain: "booqable.test",
-          company: "demo"
+          company_id: "demo"
         )
 
         expect(client.oauth_authenticated?).to be false
@@ -256,7 +256,7 @@ describe Booqable::OAuthClient do
           client_id: test_client_id,
           redirect_uri: test_redirect_uri,
           api_domain: "booqable.test",
-          company: "demo"
+          company_id: "demo"
         )
 
         expect(client.oauth_authenticated?).to be false
@@ -268,7 +268,7 @@ describe Booqable::OAuthClient do
           client_secret: test_client_secret,
           redirect_uri: test_redirect_uri,
           api_domain: "booqable.test",
-          company: "demo"
+          company_id: "demo"
         )
 
         expect(client.instance_variable_get(:@redirect_uri)).to eq(test_redirect_uri)
@@ -294,7 +294,7 @@ describe Booqable::OAuthClient do
           client_secret: test_client_secret,
           redirect_uri: test_redirect_uri,
           api_domain: "booqable.test",
-          company: "demo",
+          company_id: "demo",
           read_token: -> { stored_token },
           write_token: ->(token) { stored_token = token }
         )
@@ -349,7 +349,7 @@ describe Booqable::OAuthClient do
           client_secret: test_client_secret,
           redirect_uri: test_redirect_uri,
           api_domain: "booqable.test",
-          company: "demo",
+          company_id: "demo",
           read_token: -> { stored_token },
           write_token: ->(token) { stored_token = token }
         )
@@ -399,7 +399,7 @@ describe Booqable::OAuthClient do
           client_secret: test_client_secret,
           redirect_uri: test_redirect_uri,
           api_domain: "booqable.test",
-          company: "demo",
+          company_id: "demo",
           read_token: -> { stored_token },
           write_token: ->(token) { stored_token = token }
         )

@@ -38,7 +38,7 @@ module Booqable
                   :auto_paginate,
                   :client_id,
                   :client_secret,
-                  :company,
+                  :company_id,
                   :connection_options,
                   :debug,
                   :default_media_type,
@@ -71,7 +71,7 @@ module Booqable
           auto_paginate
           client_id
           client_secret
-          company
+          company_id
           connection_options
           debug
           default_media_type
