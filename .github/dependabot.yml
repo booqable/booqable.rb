@@ -1,0 +1,19 @@
+version: 2
+
+updates:
+- package-ecosystem: bundler
+  open-pull-requests-limit: 10
+  directory: "/"
+  schedule:
+    interval: monthly
+  labels:
+    - "team-ow"
+    - "review"
+  groups:
+    rubygems:
+      update-types:
+        - "minor"
+        - "patch"
+      exclude-patterns:
+        - "rails"
+        - "*active*"
