@@ -197,6 +197,7 @@ DEPENDENCIES
   rubocop (~> 1.81)
   rubocop-37signals!
   simplecov (~> 0.22.0)
+  simplecov_json_formatter (~> 0.1.4)
   vcr (~> 6.3)
   webmock (~> 3.25)
 
