@@ -11,7 +11,7 @@ GIT
 PATH
   remote: .
   specs:
-    booqable (0.1.0)
+    booqable (1.0.0)
       addressable (~> 2.8)
       faraday (~> 2.13)
       faraday-retry (~> 2.3)
