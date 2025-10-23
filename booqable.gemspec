@@ -5,8 +5,8 @@ require_relative "lib/booqable/version"
 Gem::Specification.new do |spec|
   spec.name = "booqable"
   spec.version = Booqable::VERSION
-  spec.authors = [ "Booqable" ]
-  spec.email = [ "support@booqable.com" ]
+  spec.authors = [ "Hrvoje Šimić" ]
+  spec.email = [ "services@booqable.com" ]
 
   spec.summary = "Official Booqable API client for Ruby."
   spec.description = "Ruby toolkit for the Booqable API. Provides a simple interface to interact with all Booqable API endpoints including orders, customers, products, and more."
