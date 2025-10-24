@@ -5,6 +5,7 @@ Ruby toolkit for the [Booqable API](https://developers.booqable.com/).
 [Booqable](https://booqable.com) is a rental management platform that helps businesses manage their rental inventory, customers, and orders. This gem provides a Ruby interface to interact with all Booqable API endpoints.
 
 ## Table of Contents
+
 - [Installation](#installation)
 - [Making requests](#making-requests)
 - [Authentication](#authentication)
@@ -89,11 +90,11 @@ client = Booqable::Client.new(
   client_id: 'your_oauth_client_id',
   client_secret: 'your_oauth_client_secret',
   company_id: 'your_company_id',
-  read_token: -> { 
+  read_token: -> {
     # Return stored token hash
     JSON.parse(File.read('token.json'))
   },
-  write_token: ->(token) { 
+  write_token: ->(token) {
     # Store token hash
     File.write('token.json', token.to_json)
   }
@@ -159,7 +160,7 @@ client = Booqable::Client.new(
 
 ## Pagination
 
-The Booqable API uses cursor-based pagination. Booqable provides several ways to handle paginated responses:
+Booqable provides several ways to handle paginated responses:
 
 ### Manual pagination
 
@@ -296,15 +297,18 @@ deleted_product.id  # => 'product_id'
 Booqable provides access to all Booqable API resources:
 
 **Core Resources:**
+
 - `orders`, `customers`, `products`, `items`
 - `employees`, `companies`, `locations`
 - `payments`, `invoices`, `documents`
 
 **Inventory Management:**
+
 - `inventory_levels`, `stock_items`, `stock_adjustments`
 - `transfers`, `plannings`, `clusters`
 
 **Configuration:**
+
 - `settings`, `properties`, `tax_rates`
 - `payment_methods`, `email_templates`
 
@@ -344,18 +348,6 @@ end
 Booqable.configure do |c|
   c.proxy = 'http://proxy.example.com:8080'
 end
-```
-
-### Custom serialization
-
-```ruby
-# Access raw response data
-response = Booqable.orders.list
-puts response.class  # => Sawyer::Resource
-
-# Get response metadata
-puts Booqable.last_response.status
-puts Booqable.last_response.headers
 ```
 
 ## Development
