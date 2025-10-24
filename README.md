@@ -236,7 +236,7 @@ new_order = Booqable.orders.create(
 new_order.status  # => 'draft'
 
 # Update order
-updated_order = Booqable.orders.update('order_id', status: 'reserved')
+updated_order = Booqable.orders.update('order_id', stops_at: '2024-01-03T00:00:00Z')
 updated_order.status  # => 'reserved'
 
 # Delete order
