@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/booqable/booqable.rb"
-  spec.metadata["changelog_uri"] = "https://github.com/booqable/booqable.rb/blob/master/CHANGELOG.md"
+  spec.metadata["changelog_uri"] = "https://github.com/booqable/booqable.rb/blob/main/CHANGELOG.md"
   spec.metadata["documentation_uri"] = "https://developers.booqable.com/"
   spec.metadata["bug_tracker_uri"] = "https://github.com/booqable/booqable.rb/issues"
 
