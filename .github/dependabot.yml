@@ -4,6 +4,8 @@ updates:
 - package-ecosystem: bundler
   open-pull-requests-limit: 10
   directory: "/"
+  cooldown:
+    default-days: 30
   schedule:
     interval: monthly
   labels:
