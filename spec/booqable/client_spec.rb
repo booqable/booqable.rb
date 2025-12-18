@@ -422,6 +422,51 @@ describe Booqable::Client do
         expect { client.get("/orders") }.to raise_error(Booqable::Unauthorized)
       end
 
+      it "raises OAuthTokenRevoked when refresh token has been revoked" do
+        client = Booqable::Client.new(
+          company_id: "demo",
+          api_domain: "booqable.test",
+          client_id: test_client_id,
+          client_secret: test_client_secret,
+          write_token: ->(token) { },
+          read_token: -> {
+            {
+              access_token: test_access_token,
+              refresh_token: test_refresh_token,
+              expires_at: Time.now - 3600  # Expired token
+            }
+          }
+        )
+
+        # Mock the OAuth2 token refresh to fail with invalid_grant (revoked token)
+        mock_token = double("AccessToken", expired?: true)
+        oauth_error = OAuth2::Error.new("invalid_grant")
+
+        # Mock the error response for revoked token (400 status with invalid_grant)
+        mock_response = double("Response",
+          response: double("HTTPResponse",
+            env: double("Env",
+              to_h: {
+                status: 400,
+                body: '{"error": "invalid_grant"}',
+                response_headers: { "Content-Type" => "application/json" },
+                method: :post,
+                url: "https://demo.booqable.test/oauth/token"
+              }
+            )
+          )
+        )
+
+        allow(oauth_error).to receive(:response).and_return(mock_response)
+        allow(OAuth2::AccessToken).to receive(:from_hash).and_return(mock_token)
+        allow(mock_token).to receive(:refresh!).and_raise(oauth_error)
+
+        # Booqable::Error.from_response will raise OAuthTokenRevoked for 400 with invalid_grant
+        allow(Booqable::Error).to receive(:from_response).and_raise(Booqable::OAuthTokenRevoked)
+
+        expect { client.get("/orders") }.to raise_error(Booqable::OAuthTokenRevoked)
+      end
+
       it "injects oauth middleware when oauth authenticated" do
         client = Booqable::Client.new(
           company_id: "demo",
@@ -1268,6 +1313,14 @@ describe Booqable::Client do
         },
         body: { message: "required filter" }.to_json
       expect { Booqable.post("/orders") }.to raise_error Booqable::RequiredFilter
+
+      stub_post("/orders").to_return \
+        status: 400,
+        headers: {
+          content_type: "application/json"
+        },
+        body: { error: "invalid_grant" }.to_json
+      expect { Booqable.post("/orders") }.to raise_error Booqable::OAuthTokenRevoked
     end
 
     it "knows the difference between different kinds of payment required errors" do

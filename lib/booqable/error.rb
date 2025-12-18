@@ -103,6 +103,8 @@ module Booqable
         Booqable::InvalidFilter
       when /required filter/i
         Booqable::RequiredFilter
+      when /invalid_grant/i
+        Booqable::OAuthTokenRevoked
       else
         Booqable::BadRequest
       end
@@ -299,6 +301,10 @@ module Booqable
   # Raised when Booqable returns a 400 HTTP status code
   # and body matches 'required filter'
   class RequiredFilter < ClientError; end
+
+  # Raised when Booqable returns a 400 HTTP status code
+  # and body matches 'invalid_grant' (OAuth token revocation)
+  class OAuthTokenRevoked < ClientError; end
 
   # Raised when Booqable returns a 401 HTTP status code
   class Unauthorized < ClientError; end
