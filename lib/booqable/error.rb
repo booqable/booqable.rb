@@ -42,7 +42,7 @@ module Booqable
       # headers = response[:response_headers]
 
       if klass =  case status
-         when 400      then error_for_400(body)
+         when 400      then error_for_400(response)
          when 401      then Booqable::Unauthorized
          when 402      then error_for_402(body)
          when 403      then Booqable::Forbidden
@@ -85,8 +85,8 @@ module Booqable
     # Return most appropriate error for 400 HTTP status code
     # @private
     # rubocop:disable Metrics/CyclomaticComplexity
-    def self.error_for_400(body)
-      case body
+    def self.error_for_400(response)
+      case response.body
       when /unwrittable_attribute/i
         Booqable::ReadOnlyAttribute
       when /unknown_attribute/i
@@ -104,7 +104,7 @@ module Booqable
       when /required filter/i
         Booqable::RequiredFilter
       when /invalid_grant/i
-        Booqable::OAuthTokenRevoked
+        error_for_invalid_grant(response)
       else
         Booqable::BadRequest
       end
@@ -162,6 +162,26 @@ module Booqable
         Booqable::ReadOnlyMode
       else
         Booqable::ServiceUnavailable
+      end
+    end
+
+    # Return most appropriate error for invalid_grant OAuth error
+    #
+    # Determines whether the invalid_grant error is due to a revoked refresh token
+    # or a different OAuth grant error by examining the grant_type parameter
+    # in the request body.
+    #
+    # @param response [Hash] HTTP response containing the request body
+    # @return [Class] RefreshTokenRevoked if grant_type is refresh_token, InvalidGrant otherwise
+    # @private
+    def self.error_for_invalid_grant(response)
+      grant_type = CGI.parse(response.request_body).dig("grant_type", 0)
+
+      case grant_type
+      when /refresh_token/i
+        Booqable::RefreshTokenRevoked
+      else
+        Booqable::InvalidGrant
       end
     end
 
@@ -303,8 +323,14 @@ module Booqable
   class RequiredFilter < ClientError; end
 
   # Raised when Booqable returns a 400 HTTP status code
-  # and body matches 'invalid_grant' (OAuth token revocation)
-  class OAuthTokenRevoked < ClientError; end
+  # and body matches 'invalid_grant' and
+  # the grant type is refresh token (OAuth error)
+  class RefreshTokenRevoked < ClientError; end
+
+  # Raised when Booqable returns a 400 HTTP status code
+  # and body matches 'invalid_grant' and
+  # grant type is not refresh token (OAuth error)
+  class InvalidGrant < ClientError; end
 
   # Raised when Booqable returns a 401 HTTP status code
   class Unauthorized < ClientError; end

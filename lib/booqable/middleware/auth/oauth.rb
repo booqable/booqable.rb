@@ -78,7 +78,7 @@ module Booqable
 
           new_token
         rescue OAuth2::Error => e
-          response = e.response.response.env.to_h
+          response = e.response.response.env
 
           Booqable::Error.from_response(response)
         end

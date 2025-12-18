@@ -422,7 +422,7 @@ describe Booqable::Client do
         expect { client.get("/orders") }.to raise_error(Booqable::Unauthorized)
       end
 
-      it "raises OAuthTokenRevoked when refresh token has been revoked" do
+      it "raises InvalidGrant when refresh token has been revoked" do
         client = Booqable::Client.new(
           company_id: "demo",
           api_domain: "booqable.test",
@@ -461,10 +461,10 @@ describe Booqable::Client do
         allow(OAuth2::AccessToken).to receive(:from_hash).and_return(mock_token)
         allow(mock_token).to receive(:refresh!).and_raise(oauth_error)
 
-        # Booqable::Error.from_response will raise OAuthTokenRevoked for 400 with invalid_grant
-        allow(Booqable::Error).to receive(:from_response).and_raise(Booqable::OAuthTokenRevoked)
+        # Booqable::Error.from_response will raise InvalidGrant for 400 with invalid_grant
+        allow(Booqable::Error).to receive(:from_response).and_raise(Booqable::InvalidGrant)
 
-        expect { client.get("/orders") }.to raise_error(Booqable::OAuthTokenRevoked)
+        expect { client.get("/orders") }.to raise_error(Booqable::InvalidGrant)
       end
 
       it "injects oauth middleware when oauth authenticated" do
@@ -1320,7 +1320,7 @@ describe Booqable::Client do
           content_type: "application/json"
         },
         body: { error: "invalid_grant" }.to_json
-      expect { Booqable.post("/orders") }.to raise_error Booqable::OAuthTokenRevoked
+      expect { Booqable.post("/orders") }.to raise_error Booqable::InvalidGrant
     end
 
     it "knows the difference between different kinds of payment required errors" do
@@ -1901,6 +1901,49 @@ describe Booqable::Client do
 
         expect(redacted_url).to include("refresh_token=(redacted)")
         expect(redacted_url).not_to include("token456")
+      end
+    end
+
+    describe ".error_for_invalid_grant" do
+      it "returns RefreshTokenRevoked when grant_type is refresh_token" do
+        # Create a response-like object that supports both hash and method access
+        response = double("Response",
+          body: '{"error": "invalid_grant"}',
+          request_body: "grant_type=refresh_token&client_id=test&client_secret=secret"
+        )
+
+        error_class = Booqable::Error.send(:error_for_invalid_grant, response)
+        expect(error_class).to eq(Booqable::RefreshTokenRevoked)
+      end
+
+      it "returns InvalidGrant when grant_type is not refresh_token" do
+        response = double("Response",
+          body: '{"error": "invalid_grant"}',
+          request_body: "grant_type=authorization_code&code=test&client_id=test"
+        )
+
+        error_class = Booqable::Error.send(:error_for_invalid_grant, response)
+        expect(error_class).to eq(Booqable::InvalidGrant)
+      end
+
+      it "returns InvalidGrant when grant_type is missing" do
+        response = double("Response",
+          body: '{"error": "invalid_grant"}',
+          request_body: "client_id=test&client_secret=secret"
+        )
+
+        error_class = Booqable::Error.send(:error_for_invalid_grant, response)
+        expect(error_class).to eq(Booqable::InvalidGrant)
+      end
+
+      it "handles URL-encoded request bodies with special characters" do
+        response = double("Response",
+          body: '{"error": "invalid_grant"}',
+          request_body: "grant_type=refresh_token&refresh_token=abc%2Fdef"
+        )
+
+        error_class = Booqable::Error.send(:error_for_invalid_grant, response)
+        expect(error_class).to eq(Booqable::RefreshTokenRevoked)
       end
     end
   end
