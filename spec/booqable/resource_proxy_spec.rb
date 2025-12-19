@@ -55,6 +55,27 @@ describe Booqable::ResourceProxy do
       end
     end
 
+    describe "#all" do
+      it "responds to all method" do
+        expect(Booqable.orders).to respond_to(:all)
+      end
+
+      it "all method delegates to list" do
+        proxy = Booqable.orders
+        allow(proxy).to receive(:list).and_return([])
+        result = proxy.all
+        expect(proxy).to have_received(:list).with({})
+        expect(result).to eq([])
+      end
+
+      it "passes parameters to list" do
+        proxy = Booqable.orders
+        allow(proxy).to receive(:list).and_return([])
+        proxy.all(page: { size: 1 })
+        expect(proxy).to have_received(:list).with(page: { size: 1 })
+      end
+    end
+
     describe "#find", :vcr do
       let(:order_id) { "3e037580-3d7a-4d23-876c-f0ba1a481bb7" }
 
