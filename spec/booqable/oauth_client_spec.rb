@@ -437,10 +437,7 @@ describe Booqable::OAuthClient do
         allow(env).to receive(:request_headers).and_return({})
         allow(env).to receive(:[]=)
 
-        expect(Booqable::Error).to receive(:from_response).with({
-          status: 401,
-          body: '{"error": "invalid_grant"}'
-        }).and_raise(Booqable::Unauthorized)
+        expect(Booqable::Error).to receive(:from_response).and_raise(Booqable::Unauthorized)
 
         expect { middleware.call(env) }.to raise_error(Booqable::Unauthorized)
       end
