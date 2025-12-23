@@ -58,6 +58,13 @@ module Booqable
       paginate @resource, params
     end
 
+    # Alias for list
+    #
+    # @see list
+    def all(params = {})
+      list(params)
+    end
+
     # Find a specific resource by ID
     #
     # Retrieves a single resource by its unique identifier.

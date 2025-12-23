@@ -223,6 +223,13 @@ orders = Booqable.orders.list(
   sort: '-created_at'
 )
 
+# `all` is an alias for `list`
+orders = Booqable.orders.all(
+  include: 'customer,items',
+  filter: { status: 'reserved' },
+  sort: '-created_at'
+)
+
 # Find specific order
 order = Booqable.orders.find('order_id', include: 'customer,items')
 order.items.count
