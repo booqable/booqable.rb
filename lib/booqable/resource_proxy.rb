@@ -60,24 +60,7 @@ module Booqable
 
     # Alias for list
     #
-    # Retrieves a collection of resources. This is an alias for the #list method.
-    #
-    # @param params [Hash] Query parameters for filtering, sorting, and pagination
-    # @option params [String] :include Related resources to include (e.g., "customer,items")
-    # @option params [Hash] :filter Filter criteria (e.g., { status: "active" })
-    # @option params [String] :sort Sort criteria (e.g., "created_at", "-updated_at")
-    # @option params [Hash] :page Pagination parameters (e.g., { number: 1, size: 25 })
-    # @return [Array, Enumerator] Collection of resources or enumerator for auto-pagination
-    #
-    # @example List all orders
-    #   orders.all
-    #
-    # @example List orders with filters
-    #   orders.all(
-    #     include: "customer",
-    #     filter: { status: "active" },
-    #     sort: "-created_at"
-    #   )
+    # @see list
     def all(params = {})
       list(params)
     end
