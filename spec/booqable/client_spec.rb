@@ -964,6 +964,16 @@ describe Booqable::Client do
       expect { Booqable.get("/unauthorized") }.to raise_error Booqable::Unauthorized
     end
 
+    it "raises TokenRevoked on 401 with revoked token message" do
+      stub_get("/revoked").to_return \
+        status: 401,
+        headers: {
+          content_type: "application/json"
+        },
+        body: { message: "Token is Invalid (Revoked)" }.to_json
+      expect { Booqable.get("/revoked") }.to raise_error Booqable::TokenRevoked
+    end
+
     it "raises on 403" do
       stub_get("/forbidden").to_return(status: 403)
       expect { Booqable.get("/forbidden") }.to raise_error Booqable::Forbidden

@@ -43,7 +43,7 @@ module Booqable
 
       if klass =  case status
          when 400      then error_for_400(response)
-         when 401      then Booqable::Unauthorized
+         when 401      then error_for_401(response)
          when 402      then error_for_402(body)
          when 403      then Booqable::Forbidden
          when 404      then error_for_404(body)
@@ -110,6 +110,17 @@ module Booqable
       end
     end
     # rubocop:enable Metrics/CyclomaticComplexity
+
+    # Return most appropriate error for 401 HTTP status code
+    # @private
+    def self.error_for_401(response)
+      case response.body
+      when /token is invalid \(revoked\)/i
+        Booqable::TokenRevoked
+      else
+        Booqable::Unauthorized
+      end
+    end
 
     # Return most appropriate error for 402 HTTP status code
     # @private
@@ -322,10 +333,14 @@ module Booqable
   # and body matches 'required filter'
   class RequiredFilter < ClientError; end
 
+  # Raised when Booqable returns a 401 HTTP status code
+  # and body matches 'token is invalid (revoked)'
+  class TokenRevoked < ClientError; end
+
   # Raised when Booqable returns a 400 HTTP status code
   # and body matches 'invalid_grant' and
   # the grant type is refresh token (OAuth error)
-  class RefreshTokenRevoked < ClientError; end
+  class RefreshTokenRevoked < TokenRevoked; end
 
   # Raised when Booqable returns a 400 HTTP status code
   # and body matches 'invalid_grant' and
