@@ -7,7 +7,7 @@ gemspec
 
 group :development do
   gem "rake", "~> 13.3"
-  gem "rubocop", "~> 1.81"
+  gem "rubocop", "~> 1.82"
   gem "rubocop-37signals", github: "basecamp/house-style", require: false
 end
 
@@ -19,6 +19,6 @@ end
 
 group :development, :test do
   gem "debug", "~> 1.11"
-  gem "vcr", "~> 6.3"
+  gem "vcr", "~> 6.4"
   gem "webmock", "~> 3.26"
 end
