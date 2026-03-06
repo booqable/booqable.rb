@@ -140,9 +140,9 @@ describe Booqable::Client do
 
     it "sets a default Content-Type header" do
       orders_request = stub_post("/orders")
-                     .with({
-                             headers: { "Content-Type" => "application/vnd.api+json" }
-                           })
+        .with({
+          headers: { "Content-Type" => "application/vnd.api+json" }
+        })
 
       Booqable.client.post "/orders", {}
       assert_requested orders_request
@@ -286,7 +286,7 @@ describe Booqable::Client do
         client = api_key_client
 
         orders_request = stub_get("/orders")
-                       .with(headers: { authorization: "Bearer #{test_api_key}" })
+          .with(headers: { authorization: "Bearer #{test_api_key}" })
         client.get("/orders")
         assert_requested orders_request
       end
@@ -352,8 +352,7 @@ describe Booqable::Client do
             "access_token" => refreshed_token,
             "refresh_token" => "new_refresh_token",
             "expires_at" => Time.now + 3600
-          }
-        )
+          })
 
         refreshed_mock_token = double("AccessToken",
           token: refreshed_token,
@@ -363,8 +362,7 @@ describe Booqable::Client do
             "access_token" => refreshed_token,
             "refresh_token" => "new_refresh_token",
             "expires_at" => Time.now + 3600
-          }
-        )
+          })
 
         allow(OAuth2::AccessToken).to receive(:from_hash).and_return(mock_token)
         allow(mock_token).to receive(:refresh!).and_return(refreshed_mock_token)
@@ -407,10 +405,7 @@ describe Booqable::Client do
                 response_headers: { "Content-Type" => "application/json" },
                 method: :post,
                 url: "https://demo.booqable.test/oauth/token"
-              }
-            )
-          )
-        )
+              })))
 
         allow(oauth_error).to receive(:response).and_return(mock_response)
         allow(OAuth2::AccessToken).to receive(:from_hash).and_return(mock_token)
@@ -452,10 +447,7 @@ describe Booqable::Client do
                 response_headers: { "Content-Type" => "application/json" },
                 method: :post,
                 url: "https://demo.booqable.test/oauth/token"
-              }
-            )
-          )
-        )
+              })))
 
         allow(oauth_error).to receive(:response).and_return(mock_response)
         allow(OAuth2::AccessToken).to receive(:from_hash).and_return(mock_token)
@@ -757,6 +749,23 @@ describe Booqable::Client do
     end
   end # .agent
 
+  describe "#parse_resource" do
+    let(:client) { Booqable::Client.new }
+    let(:payload) { { "data" => { "id" => "123" } } }
+
+    it "delegates to Booqable::ResourceParser.parse" do
+      expect(Booqable::ResourceParser).to receive(:parse).with(payload)
+
+      client.parse_resource(payload)
+    end
+
+    it "is aliased as deserialize_resource" do
+      expect(Booqable::ResourceParser).to receive(:parse).with(payload)
+
+      client.deserialize_resource(payload)
+    end
+  end # #parse_resource
+
   describe ".last_response", :vcr do
     it "caches the last agent response" do
       Booqable.reset!
@@ -788,7 +797,7 @@ describe Booqable::Client do
 
     it "handles headers" do
       request = stub_get("/zen")
-                .with(query: { foo: "bar" }, headers: { accept: "text/plain" })
+        .with(query: { foo: "bar" }, headers: { accept: "text/plain" })
       Booqable.get "/zen", foo: "bar", accept: "text/plain"
       assert_requested request
     end
@@ -803,14 +812,14 @@ describe Booqable::Client do
 
     it "handles query params" do
       request = stub_head("/orders")
-                .with(query: { foo: "bar" })
+        .with(query: { foo: "bar" })
       Booqable.head "/orders", foo: "bar"
       assert_requested request
     end
 
     it "handles headers" do
       request = stub_head("/zen")
-                .with(query: { foo: "bar" }, headers: { accept: "text/plain" })
+        .with(query: { foo: "bar" }, headers: { accept: "text/plain" })
       Booqable.head "/zen", foo: "bar", accept: "text/plain"
       assert_requested request
     end
@@ -826,7 +835,7 @@ describe Booqable::Client do
 
     it "Accepts application/vnd.api+json by default" do
       orders_request = stub_get("/orders")
-                     .with(headers: { accept: "application/vnd.api+json" })
+        .with(headers: { accept: "application/vnd.api+json" })
       @client.get "/orders"
       assert_requested orders_request
       expect(@client.last_response.status).to eq(200)
@@ -834,7 +843,7 @@ describe Booqable::Client do
 
     it "allows Accept'ing another media type" do
       orders_request = stub_get("/orders")
-                     .with(headers: { accept: "application/json" })
+        .with(headers: { accept: "application/json" })
       @client.get "/orders", accept: "application/json"
       assert_requested orders_request
       expect(@client.last_response.status).to eq(200)
@@ -842,7 +851,7 @@ describe Booqable::Client do
 
     it "sets a default user agent" do
       orders_request = stub_get("/orders")
-                     .with(headers: { user_agent: Booqable::Default.user_agent })
+        .with(headers: { user_agent: Booqable::Default.user_agent })
       @client.get "/orders"
       assert_requested orders_request
       expect(@client.last_response.status).to eq(200)
@@ -851,7 +860,7 @@ describe Booqable::Client do
     it "sets a custom user agent" do
       user_agent = "Mozilla/5.0 I am Spartacus!"
       orders_request = stub_get("/orders")
-                     .with(headers: { user_agent: user_agent })
+        .with(headers: { user_agent: user_agent })
       client = Booqable::Client.new(user_agent: user_agent)
       client.get "/orders"
       assert_requested orders_request
@@ -905,8 +914,8 @@ describe Booqable::Client do
     it "passes along request headers for POST" do
       headers = { "X-Booqable-Foo" => "bar" }
       orders_request = stub_post("/orders")
-                     .with(headers: headers)
-                     .to_return(status: 201)
+        .with(headers: headers)
+        .to_return(status: 201)
       client = Booqable::Client.new
       client.post "/orders", headers: headers
       assert_requested orders_request
@@ -1076,8 +1085,8 @@ describe Booqable::Client do
             errors: [
               "Position is invalid",
               { resource: "Issue",
-                field: "title",
-                code: "missing_field" }
+               field: "title",
+               code: "missing_field" }
             ]
           }.to_json
       begin
@@ -1587,14 +1596,14 @@ describe Booqable::Client do
     describe "PUT requests" do
       it "makes PUT requests using the put method" do
         orders_request = stub_put("/orders/123")
-                       .with({
-                               headers: { "Content-Type" => "application/vnd.api+json" }
-                             })
-                       .to_return(
-                         status: 200,
-                         headers: { "content-type" => "application/json" },
-                         body: { data: { id: "123", type: "order" } }.to_json
-                       )
+          .with({
+            headers: { "Content-Type" => "application/vnd.api+json" }
+          })
+          .to_return(
+            status: 200,
+            headers: { "content-type" => "application/json" },
+            body: { data: { id: "123", type: "order" } }.to_json
+          )
 
         Booqable.client.put "/orders/123", { name: "Updated Order" }
         assert_requested orders_request
@@ -1604,14 +1613,14 @@ describe Booqable::Client do
     describe "PATCH requests" do
       it "makes PATCH requests using the patch method" do
         orders_request = stub_patch("/orders/123")
-                       .with({
-                               headers: { "Content-Type" => "application/vnd.api+json" }
-                             })
-                       .to_return(
-                         status: 200,
-                         headers: { "content-type" => "application/json" },
-                         body: { data: { id: "123", type: "order" } }.to_json
-                       )
+          .with({
+            headers: { "Content-Type" => "application/vnd.api+json" }
+          })
+          .to_return(
+            status: 200,
+            headers: { "content-type" => "application/json" },
+            body: { data: { id: "123", type: "order" } }.to_json
+          )
 
         Booqable.client.patch "/orders/123", { name: "Patched Order" }
         assert_requested orders_request
@@ -1621,14 +1630,14 @@ describe Booqable::Client do
     describe "DELETE requests" do
       it "makes DELETE requests using the delete method" do
         orders_request = stub_delete("/orders/123")
-                       .with({
-                               headers: { "Content-Type" => "application/vnd.api+json" }
-                             })
-                       .to_return(
-                         status: 204,
-                         headers: { "content-type" => "application/json" },
-                         body: ""
-                       )
+          .with({
+            headers: { "Content-Type" => "application/vnd.api+json" }
+          })
+          .to_return(
+            status: 204,
+            headers: { "content-type" => "application/json" },
+            body: ""
+          )
 
         Booqable.client.delete "/orders/123"
         assert_requested orders_request
@@ -1919,8 +1928,7 @@ describe Booqable::Client do
         # Create a response-like object that supports both hash and method access
         response = double("Response",
           body: '{"error": "invalid_grant"}',
-          request_body: "grant_type=refresh_token&client_id=test&client_secret=secret"
-        )
+          request_body: "grant_type=refresh_token&client_id=test&client_secret=secret")
 
         error_class = Booqable::Error.send(:error_for_invalid_grant, response)
         expect(error_class).to eq(Booqable::RefreshTokenRevoked)
@@ -1929,8 +1937,7 @@ describe Booqable::Client do
       it "returns InvalidGrant when grant_type is not refresh_token" do
         response = double("Response",
           body: '{"error": "invalid_grant"}',
-          request_body: "grant_type=authorization_code&code=test&client_id=test"
-        )
+          request_body: "grant_type=authorization_code&code=test&client_id=test")
 
         error_class = Booqable::Error.send(:error_for_invalid_grant, response)
         expect(error_class).to eq(Booqable::InvalidGrant)
@@ -1939,8 +1946,7 @@ describe Booqable::Client do
       it "returns InvalidGrant when grant_type is missing" do
         response = double("Response",
           body: '{"error": "invalid_grant"}',
-          request_body: "client_id=test&client_secret=secret"
-        )
+          request_body: "client_id=test&client_secret=secret")
 
         error_class = Booqable::Error.send(:error_for_invalid_grant, response)
         expect(error_class).to eq(Booqable::InvalidGrant)
@@ -1949,8 +1955,7 @@ describe Booqable::Client do
       it "handles URL-encoded request bodies with special characters" do
         response = double("Response",
           body: '{"error": "invalid_grant"}',
-          request_body: "grant_type=refresh_token&refresh_token=abc%2Fdef"
-        )
+          request_body: "grant_type=refresh_token&refresh_token=abc%2Fdef")
 
         error_class = Booqable::Error.send(:error_for_invalid_grant, response)
         expect(error_class).to eq(Booqable::RefreshTokenRevoked)
