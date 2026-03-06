@@ -25,6 +25,7 @@ require_relative "booqable/resources"
 require_relative "booqable/auth"
 require_relative "booqable/http"
 require_relative "booqable/client"
+require_relative "booqable/resource_parser"
 
 # Main Booqable module providing access to the Booqable API
 #
@@ -53,6 +54,27 @@ module Booqable
 
       @client = Booqable::Client.new(options)
     end
+
+    # Parse a JSON:API payload into a Sawyer::Resource
+    #
+    # Converts JSON:API formatted data (from webhooks or API responses) into
+    # Ruby objects with dot-notation access for convenient attribute access.
+    #
+    # @param payload [String, Hash] JSON:API payload (string or parsed hash)
+    # @return [Sawyer::Resource, nil] Parsed resource object, or nil for empty input
+    #
+    # @example Parse a JSON string
+    #   customer = Booqable.parse_resource('{"data":{"id":"123","type":"customers","attributes":{"name":"John"}}}')
+    #   customer.name # => "John"
+    #
+    # @example Parse a webhook payload
+    #   customer = Booqable.parse_resource(webhook_payload)
+    #   customer.id # => "123"
+    #
+    def parse_resource(payload)
+      ResourceParser.parse(payload)
+    end
+    alias_method :deserialize_resource, :parse_resource
 
     private
 

@@ -13,6 +13,7 @@ Ruby toolkit for the [Booqable API](https://developers.booqable.com/).
 - [Pagination](#pagination)
 - [Rate limiting](#rate-limiting)
 - [Resources](#resources)
+- [Parsing JSON:API payloads](#parsing-jsonapi-payloads)
 - [Advanced usage](#advanced-usage)
 - [Development](#development)
 
@@ -320,6 +321,66 @@ Booqable provides access to all Booqable API resources:
 - `payment_methods`, `email_templates`
 
 **And many more...** See the [full resource list](lib/booqable/resources.json) for all available endpoints.
+
+## Parsing JSON:API payloads
+
+Booqable provides a convenient way to parse JSON:API formatted data (such as webhook payloads or raw API responses) into Ruby objects with dot-notation access:
+
+```ruby
+# Parse a webhook payload
+payload = {
+  "data" => {
+    "id" => "abc-123",
+    "type" => "customers",
+    "attributes" => {
+      "name" => "John Doe",
+      "email" => "john@example.com",
+      "created_at" => "2024-01-15T10:30:00Z"
+    }
+  }
+}
+
+customer = Booqable.parse_resource(payload)
+customer.id         # => "abc-123"
+customer.name       # => "John Doe"
+customer.email      # => "john@example.com"
+customer.created_at # => 2024-01-15 10:30:00 UTC (Time object)
+```
+
+### With nested relationships
+
+```ruby
+payload = {
+  "data" => {
+    "id" => "order-123",
+    "type" => "orders",
+    "attributes" => { "status" => "reserved" },
+    "relationships" => {
+      "customer" => { "data" => { "id" => "customer-456", "type" => "customers" } }
+    }
+  },
+  "included" => [
+    {
+      "id" => "customer-456",
+      "type" => "customers",
+      "attributes" => { "name" => "Jane Smith" }
+    }
+  ]
+}
+
+order = Booqable.parse_resource(payload)
+order.status        # => "reserved"
+order.customer.name # => "Jane Smith"
+```
+
+### Using with a client instance
+
+```ruby
+# If you already have a client instance
+customer = client.parse_resource(payload)
+```
+
+`deserialize_resource` is available as an alias for `parse_resource`.
 
 ## Advanced usage
 
