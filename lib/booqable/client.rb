@@ -56,6 +56,23 @@ module Booqable
       end
     end
 
+    # Parse a JSON:API payload into a Sawyer::Resource
+    #
+    # Converts JSON:API formatted data (from webhooks or API responses) into
+    # Ruby objects with dot-notation access for convenient attribute access.
+    #
+    # @param payload [String, Hash] JSON:API payload (string or parsed hash)
+    # @return [Sawyer::Resource, nil] Parsed resource object, or nil for empty input
+    #
+    # @example
+    #   customer = client.parse_resource(webhook_payload)
+    #   customer.name # => "John"
+    #
+    def parse_resource(payload)
+      Booqable::ResourceParser.parse(payload)
+    end
+    alias_method :deserialize_resource, :parse_resource
+
     # String representation of the client with sensitive information masked
     #
     # Overrides the default inspect method to hide sensitive configuration

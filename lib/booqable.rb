@@ -25,6 +25,7 @@ require_relative "booqable/resources"
 require_relative "booqable/auth"
 require_relative "booqable/http"
 require_relative "booqable/client"
+require_relative "booqable/resource_parser"
 
 # Main Booqable module providing access to the Booqable API
 #
