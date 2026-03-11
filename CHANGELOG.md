@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [1.1.0] - 2026-03-11
+
 - Add `parse_resource` method (aliased as `deserialize_resource`) for parsing
   JSON:API payloads into Sawyer::Resource objects with dot-notation access.
   Useful for parsing webhook payloads or raw API responses.
