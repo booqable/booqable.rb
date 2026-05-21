@@ -105,6 +105,30 @@ client = Booqable::Client.new(
 client.authenticate_with_code(params[:code])
 ```
 
+#### Serializing concurrent token refreshes
+
+When multiple processes share the same OAuth token (e.g. the same installation
+serving concurrent requests), pass a `refresh_token_wrapper` to serialize the
+read + expiry-check + refresh sequence. The middleware yields to the wrapper
+once per request; the host application decides how to lock.
+
+```ruby
+Booqable::Client.new(
+  # ...other oauth options...
+  refresh_token_wrapper: ->(&block) {
+    AppInstallation.transaction do
+      installation.with_advisory_lock!("app_installation:#{installation.id}", transaction: true) do
+        installation.reload
+        block.call
+      end
+    end
+  }
+)
+```
+
+The gem itself has no advisory-lock dependency — the wrapper is just a
+callable that takes a block.
+
 ### Single-Use Token Authentication
 
 For server-to-server communication requiring enhanced security:

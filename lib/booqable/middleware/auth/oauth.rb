@@ -24,6 +24,10 @@ module Booqable
         # @option options [String] :api_endpoint API endpoint URL for the OAuth provider
         # @option options [Proc] :read_token Proc to read stored token
         # @option options [Proc] :write_token Proc to store new token
+        # @option options [Proc, nil] :refresh_token_wrapper Optional callable
+        #   invoked with a block around the read+check+refresh sequence. The
+        #   host application can use it to serialize concurrent refreshes
+        #   (e.g. wrap the block in a database transaction + advisory lock).
         # @raise [KeyError] If required options are not provided
         def initialize(app, options = {})
           super(app)
@@ -33,6 +37,7 @@ module Booqable
           @api_endpoint = options.fetch(:api_endpoint)
           @read_token = options.fetch(:read_token)
           @write_token = options.fetch(:write_token)
+          @refresh_token_wrapper = options[:refresh_token_wrapper]
 
           @client = OAuthClient.new(
             client_id: @client_id,
@@ -50,10 +55,12 @@ module Booqable
         # @param env [Faraday::Env] The request environment
         # @return [Faraday::Response] The response from the next middleware
         def call(env)
-          @token = @client.get_access_token_from_hash(@read_token.call)
+          with_refresh_wrapper do
+            @token = @client.get_access_token_from_hash(@read_token.call)
 
-          if @token.expired? || @token.expires_at.nil?
-            @token = refresh_token!
+            if @token.expired? || @token.expires_at.nil?
+              @token = refresh_token!
+            end
           end
 
           env.request_headers["Authorization"] ||= "Bearer #{@token.token}"
@@ -62,6 +69,16 @@ module Booqable
         end
 
         private
+
+        # Yield to the configured wrapper, if any
+        #
+        # When a host application provides a wrapper (e.g. an advisory lock),
+        # the read+check+refresh sequence runs inside it so concurrent callers
+        # cannot interleave a read with another caller's refresh.
+        def with_refresh_wrapper(&block)
+          return yield unless @refresh_token_wrapper
+          @refresh_token_wrapper.call(&block)
+        end
 
         # Refresh the expired OAuth token
         #

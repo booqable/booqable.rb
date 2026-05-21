@@ -57,7 +57,8 @@ module Booqable
         api_endpoint: api_endpoint,
         redirect_uri: redirect_uri,
         read_token: read_token,
-        write_token: write_token
+        write_token: write_token,
+        refresh_token_wrapper: refresh_token_wrapper
       } if oauth_authenticated?
 
       builder.use Booqable::Middleware::Auth::ApiKey, {

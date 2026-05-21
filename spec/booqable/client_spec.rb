@@ -375,6 +375,58 @@ describe Booqable::Client do
         expect(stored_token).to eq(refreshed_mock_token.to_hash)
       end
 
+      it "wraps the read+check+refresh sequence in refresh_token_wrapper when provided" do
+        refreshed_token = "new_access_token_456"
+        wrapper_calls = 0
+        read_calls = 0
+
+        wrapper = lambda do |&block|
+          wrapper_calls += 1
+          # Capture that read_token has not been called outside the wrapper yet
+          @reads_before_wrapper = read_calls
+          block.call
+        end
+
+        client = Booqable::Client.new(
+          company_id: "demo",
+          api_domain: "booqable.test",
+          client_id: test_client_id,
+          client_secret: test_client_secret,
+          refresh_token_wrapper: wrapper,
+          write_token: ->(token) { },
+          read_token: -> {
+            read_calls += 1
+            {
+              access_token: test_access_token,
+              refresh_token: test_refresh_token,
+              expires_at: Time.now - 3600
+            }
+          }
+        )
+
+        mock_token = double("AccessToken",
+          token: refreshed_token,
+          refresh_token: "new_refresh_token",
+          expires_at: Time.now + 3600,
+          expired?: true,
+          to_hash: {})
+        refreshed_mock_token = double("AccessToken",
+          token: refreshed_token,
+          refresh_token: "new_refresh_token",
+          expires_at: Time.now + 3600,
+          to_hash: {})
+        allow(OAuth2::AccessToken).to receive(:from_hash).and_return(mock_token)
+        allow(mock_token).to receive(:refresh!).and_return(refreshed_mock_token)
+
+        stub_request(:get, booqable_url("/orders")).with(headers: { authorization: "Bearer #{refreshed_token}" })
+
+        client.get("/orders")
+
+        expect(wrapper_calls).to eq(1)
+        expect(@reads_before_wrapper).to eq(0)
+        expect(read_calls).to eq(1)
+      end
+
       it "handles OAuth2 errors during token refresh" do
         client = Booqable::Client.new(
           company_id: "demo",
