@@ -48,7 +48,7 @@ module Booqable
                   :proxy,
                   :read_token,
                   :redirect_uri,
-                  :refresh_token_wrapper,
+                  :around_refresh_token,
                   :single_use_token,
                   :single_use_token_algorithm,
                   :single_use_token_company_id,
@@ -82,7 +82,7 @@ module Booqable
           proxy
           read_token
           redirect_uri
-          refresh_token_wrapper
+          around_refresh_token
           single_use_token
           single_use_token_algorithm
           single_use_token_company_id

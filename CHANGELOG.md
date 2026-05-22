@@ -1,7 +1,7 @@
 ## [Unreleased]
 
-- Add optional `refresh_token_wrapper` configuration. When provided, the OAuth
-  middleware yields the read + expiry-check + refresh sequence to the wrapper
+- Add optional `around_refresh_token` configuration. When provided, the OAuth
+  middleware yields the read + expiry-check + refresh sequence to the callable
   so host applications can serialize concurrent token refreshes (e.g. with a
   database transaction and advisory lock). The gem keeps no lock dependency.
 

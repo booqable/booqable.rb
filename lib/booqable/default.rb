@@ -151,14 +151,14 @@ module Booqable
         Proc.new { }
       end
 
-      # Default OAuth refresh-token wrapper
+      # Default `around_refresh_token` callable
       #
-      # When non-nil, the OAuth middleware passes its read+check+refresh
+      # When non-nil, the OAuth middleware yields its read+check+refresh
       # sequence to this callable so the host application can serialize
       # concurrent refreshes (e.g. with an advisory lock).
       #
       # @return [Proc, nil]
-      def refresh_token_wrapper
+      def around_refresh_token
         nil
       end
 

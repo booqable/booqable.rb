@@ -375,15 +375,15 @@ describe Booqable::Client do
         expect(stored_token).to eq(refreshed_mock_token.to_hash)
       end
 
-      it "wraps the read+check+refresh sequence in refresh_token_wrapper when provided" do
+      it "wraps the read+check+refresh sequence in around_refresh_token when provided" do
         refreshed_token = "new_access_token_456"
-        wrapper_calls = 0
+        around_calls = 0
         read_calls = 0
 
-        wrapper = lambda do |&block|
-          wrapper_calls += 1
-          # Capture that read_token has not been called outside the wrapper yet
-          @reads_before_wrapper = read_calls
+        around = lambda do |&block|
+          around_calls += 1
+          # Capture that read_token has not been called outside the callback yet
+          @reads_before_around = read_calls
           block.call
         end
 
@@ -392,7 +392,7 @@ describe Booqable::Client do
           api_domain: "booqable.test",
           client_id: test_client_id,
           client_secret: test_client_secret,
-          refresh_token_wrapper: wrapper,
+          around_refresh_token: around,
           write_token: ->(token) { },
           read_token: -> {
             read_calls += 1
@@ -422,8 +422,8 @@ describe Booqable::Client do
 
         client.get("/orders")
 
-        expect(wrapper_calls).to eq(1)
-        expect(@reads_before_wrapper).to eq(0)
+        expect(around_calls).to eq(1)
+        expect(@reads_before_around).to eq(0)
         expect(read_calls).to eq(1)
       end
 
