@@ -151,6 +151,17 @@ module Booqable
         Proc.new { }
       end
 
+      # Default `around_refresh_token` callable
+      #
+      # When non-nil, the OAuth middleware yields its read+check+refresh
+      # sequence to this callable so the host application can serialize
+      # concurrent refreshes (e.g. with an advisory lock).
+      #
+      # @return [Proc, nil]
+      def around_refresh_token
+        nil
+      end
+
       # Default API key from ENV
       # @return [String, nil] API key for authentication
       def api_key

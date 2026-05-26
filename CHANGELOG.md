@@ -1,5 +1,11 @@
 ## [Unreleased]
 
+- Add optional `around_refresh_token` configuration. When provided, the OAuth
+  middleware yields the read + expiry-check + refresh sequence to the callable
+  so host applications can serialize concurrent token refreshes (e.g. with a
+  database transaction and advisory lock). The gem keeps no lock dependency.
+
+
 ## [1.1.0] - 2026-03-11
 
 - Add `parse_resource` method (aliased as `deserialize_resource`) for parsing
