@@ -1,4 +1,4 @@
-## [Unreleased]
+## [1.2.0] - 2026-05-27
 
 - Add optional `around_refresh_token` configuration. When provided, the OAuth
   middleware yields the read + expiry-check + refresh sequence to the callable
