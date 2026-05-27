@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "did_you_mean"
+
 module Booqable
   # Client for the Booqable API
   #
@@ -40,11 +42,22 @@ module Booqable
       access_token
     ]
 
+    # Accepted aliases for configuration options, mapping the alias to its
+    # canonical {Booqable::Configurable} key.
+    OPTION_ALIASES = {
+      skip_retries: :no_retries
+    }.freeze
+
     # Initialize a new Client
     #
     # @param options [Hash] Configuration options for the client
     # @see Booqable::Configurable For a complete list of supported configuration options
     def initialize(options = {})
+      options = normalize_aliases(options)
+
+      unknown_keys = options.keys.map(&:to_sym) - Booqable::Configurable.keys
+      raise ArgumentError, unknown_options_message(unknown_keys) unless unknown_keys.empty?
+
       # Use options passed in, but fall back to module defaults
       #
       # This may look like a `.keys.each` which should be replaced with `#each_key`, but
@@ -93,6 +106,35 @@ module Booqable
       end
 
       inspected
+    end
+
+    private
+
+    # Rewrite any aliased option keys to their canonical configuration key.
+    #
+    # @param options [Hash] options as passed to {#initialize}
+    # @return [Hash] options with aliases replaced by their canonical keys
+    def normalize_aliases(options)
+      options.to_h do |key, value|
+        [ OPTION_ALIASES.fetch(key.to_sym, key), value ]
+      end
+    end
+
+    # Build an error message for unknown configuration options, suggesting
+    # similarly-named valid options via did_you_mean when one is close enough.
+    #
+    # @param unknown_keys [Array<Symbol>] options that aren't valid config keys
+    # @return [String]
+    def unknown_options_message(unknown_keys)
+      dictionary = Booqable::Configurable.keys + OPTION_ALIASES.keys
+      spell_checker = DidYouMean::SpellChecker.new(dictionary: dictionary)
+
+      message = "unknown configuration option(s): #{unknown_keys.join(", ")}"
+
+      suggestions = unknown_keys.flat_map { |key| spell_checker.correct(key) }.uniq
+      message += ". Did you mean: #{suggestions.join(", ")}?" unless suggestions.empty?
+
+      message
     end
   end
 end
