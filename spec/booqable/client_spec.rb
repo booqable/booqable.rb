@@ -21,6 +21,27 @@ describe Booqable::Client do
 
       expect { client.send(:api_endpoint) }.to raise_error(Booqable::CompanyRequired)
     end
+
+    it "raises ArgumentError when given an unknown option" do
+      expect { Booqable::Client.new(totally_unknown: true) }
+        .to raise_error(ArgumentError, /unknown configuration option\(s\): totally_unknown/)
+    end
+
+    it "suggests a similar option name for a likely typo" do
+      expect { Booqable::Client.new(no_retris: true) }
+        .to raise_error(ArgumentError, /Did you mean: no_retries\?/)
+    end
+
+    it "accepts skip_retries as an alias for no_retries" do
+      client = Booqable::Client.new(skip_retries: true)
+
+      expect(client.no_retries).to be(true)
+    end
+
+    it "suggests an aliased option name for a likely typo" do
+      expect { Booqable::Client.new(skip_retris: true) }
+        .to raise_error(ArgumentError, /Did you mean: skip_retries\?/)
+    end
   end
 
   describe "module configuration" do
@@ -91,7 +112,7 @@ describe Booqable::Client do
       end
 
       it "masks api token on inspect" do
-        client = Booqable::Client.new(api_token: "87614b09dd141c22800f96f11737ade5226d7ba8")
+        client = Booqable::Client.new(api_key: "87614b09dd141c22800f96f11737ade5226d7ba8")
         inspected = client.inspect
         expect(inspected).not_to include("87614b09dd141c22800f96f11737ade5226d7ba8")
       end
