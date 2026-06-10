@@ -1,3 +1,10 @@
+## [1.2.1] - 2026-06-10
+
+- Require `oauth2 >= 2.0.22` to address GHSA-pp92-crg2-gfv9, where a
+  protocol-relative redirect `Location` could override the request authority and
+  leak the bearer `Authorization` header to an attacker-controlled host.
+
+
 ## [1.2.0] - 2026-05-27
 
 - Add optional `around_refresh_token` configuration. When provided, the OAuth
