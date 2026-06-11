@@ -34,7 +34,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "sawyer", "~> 0.9"
   spec.add_dependency "multi_json", "~> 1.15"
   spec.add_dependency "addressable", "~> 2.8"
-  spec.add_dependency "oauth2", "~> 2.0"
+  spec.add_dependency "oauth2", "~> 2.0", ">= 2.0.22"
   spec.add_dependency "jwt", "~> 3.1"
 
   # For more information and examples about making a new gem, check out our
