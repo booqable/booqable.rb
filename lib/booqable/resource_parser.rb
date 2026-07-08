@@ -69,11 +69,12 @@ module Booqable
     #
     # The agent URL is a placeholder - we don't make any HTTP requests.
     # We just need the agent to create Sawyer::Resource objects that
-    # provide dot-notation attribute access.
+    # provide dot-notation attribute access. Using Booqable::SawyerAgent
+    # makes attribute reads strict (see {Booqable::StrictAttributes}).
     #
-    # @return [Sawyer::Agent]
+    # @return [Booqable::SawyerAgent]
     def sawyer_agent
-      @sawyer_agent ||= Sawyer::Agent.new("https://example.com") do |http|
+      @sawyer_agent ||= Booqable::SawyerAgent.new("https://example.com") do |http|
         http.headers[:content_type] = "application/json"
       end
     end

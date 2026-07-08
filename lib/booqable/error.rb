@@ -421,6 +421,50 @@ module Booqable
   # and body matches 'read-only'
   class ReadOnlyMode < ServerError; end
 
+  # Raised when reading an attribute that is absent from an API resource
+  #
+  # Sawyer normally answers reads of absent attributes with nil, which turns
+  # typos and renamed API fields (e.g. `time_zone` vs `default_timezone`)
+  # into silent data bugs. Resources created by this gem raise this error
+  # instead — see {Booqable::StrictAttributes}.
+  #
+  # Attributes that are present in the payload with a null value still
+  # return nil; only reads of keys that are absent from the payload raise.
+  #
+  # This inherits from NoMethodError (not Booqable::Error) because an absent
+  # attribute is a programming error in the caller, not an API failure:
+  #
+  # * generic `rescue NoMethodError` / `rescue StandardError` code keeps working
+  # * ActiveSupport's `resource.try(:foo)` stays a safe probe: it returns nil
+  #   without calling, since respond_to? is false for absent attributes
+  #   (the bang variant `try!(:foo)` raises)
+  # * hash-style access stays a lenient, explicit probe: `resource[:foo]`
+  #   returns nil for absent keys because Sawyer rescues NoMethodError there
+  class MissingAttribute < NoMethodError
+    # Initialize a new MissingAttribute error
+    #
+    # @param attribute_name [Symbol] Name of the absent attribute that was read
+    # @param resource [Sawyer::Resource] Resource the attribute was read from
+    def initialize(attribute_name, resource)
+      super(build_message(attribute_name, resource), attribute_name)
+    end
+
+    private
+
+    def build_message(attribute_name, resource)
+      message = +"undefined attribute `#{attribute_name}` for #{resource_description(resource)}. "
+      message << "The attribute is absent from the API payload "
+      message << "(attributes present with a null value return nil). "
+      message << "Available attributes: #{resource.attrs.keys.sort.join(", ")}"
+      message
+    end
+
+    def resource_description(resource)
+      type = resource.attrs[:type]
+      type.is_a?(String) ? "a Booqable #{type} resource" : "a Booqable resource"
+    end
+  end
+
   # Raised when Booqable configuration is invalid
   class ConfigArgumentError < ArgumentError; end
 

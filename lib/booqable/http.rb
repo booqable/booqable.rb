@@ -243,15 +243,17 @@ module Booqable
 
     # Get or create the Sawyer agent for API requests
     #
-    # Returns a memoized Sawyer::Agent configured with the API endpoint,
-    # serializer, and optional logging. Sawyer handles the low-level HTTP
-    # communication and response parsing.
+    # Returns a memoized Booqable::SawyerAgent configured with the API
+    # endpoint, serializer, and optional logging. Sawyer handles the
+    # low-level HTTP communication and response parsing. Resources created
+    # through this agent raise {Booqable::MissingAttribute} when an absent
+    # attribute is read (see {Booqable::StrictAttributes}).
     #
-    # @return [Sawyer::Agent] HTTP agent instance
+    # @return [Booqable::SawyerAgent] HTTP agent instance
     # @api private
     def agent
-      @agent ||= Sawyer::Agent.new(api_endpoint,
-                                   sawyer_options) do |agent|
+      @agent ||= Booqable::SawyerAgent.new(api_endpoint,
+                                           sawyer_options) do |agent|
          agent.response :logger, logger, bodies: true if logger
       end
     end

@@ -406,6 +406,33 @@ customer = client.parse_resource(payload)
 
 `deserialize_resource` is available as an alias for `parse_resource`.
 
+## Strict attribute reads
+
+Reading an attribute that is absent from the API payload raises
+`Booqable::MissingAttribute` instead of silently returning nil, so typos and
+renamed API fields fail loudly:
+
+```ruby
+customer.name       # => "John Doe"
+customer.full_name  # raises Booqable::MissingAttribute (key absent from payload)
+```
+
+An attribute that is present in the payload with a null value still returns
+nil — only absent keys raise:
+
+```ruby
+order.customer      # => nil when the payload contains "customer": null
+```
+
+`Booqable::MissingAttribute` subclasses `NoMethodError`, so generic rescues
+keep working. To probe for an attribute that may be absent, use hash-style
+access or `key?`:
+
+```ruby
+order[:customer]      # => nil when the key is absent (lenient probe)
+order.key?(:customer) # => false when the key is absent
+```
+
 ## Advanced usage
 
 ### Custom middleware
