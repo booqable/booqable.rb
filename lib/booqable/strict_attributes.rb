@@ -50,13 +50,16 @@ module Booqable
     # @param method [Symbol] the method name passed to #method_missing
     # @return [Symbol, nil]
     def booqable_missing_attribute_read(method)
-      return nil unless defined?(@_agent) && @_agent.is_a?(Booqable::SawyerAgent)
+      # _agent/_fields are Sawyer::Resource's public attr_readers — the bare `agent`/`fields`
+      # spellings are SPECIAL_METHODS resolved inside method_missing, so calling those from
+      # this hook (which method_missing invokes) would recurse infinitely.
+      return nil unless _agent.is_a?(Booqable::SawyerAgent)
 
       match = ATTRIBUTE_READ_PATTERN.match(method.to_s)
       return nil unless match
 
       attr_name = match[1].to_sym
-      return nil if @_fields.include?(attr_name)
+      return nil if _fields.include?(attr_name)
       return nil if match[2].nil? && Sawyer::Resource::SPECIAL_METHODS.include?(match[1])
 
       attr_name
