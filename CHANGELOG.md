@@ -1,3 +1,7 @@
+## [Unreleased]
+
+- Support Ruby 4.0
+
 ## [1.2.1] - 2026-06-10
 
 - Require `oauth2 >= 2.0.22` to address GHSA-pp92-crg2-gfv9, where a
