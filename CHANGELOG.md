@@ -2,11 +2,8 @@
 
 - **Breaking:** reading an attribute that is absent from an API payload now
   raises `Booqable::MissingAttribute` (a `NoMethodError` subclass) instead of
-  silently returning nil. Attributes that are present with a null value still
-  return nil. Hash-style access (`resource[:foo]`), `key?`, and
-  ActiveSupport's `try` remain lenient probes. Only resources created by this
-  gem are affected; other Sawyer-based gems in the same
-  process keep their default behavior.
+  silently returning nil.
+- Support Ruby 4.0
 
 ## [1.2.1] - 2026-06-10
 

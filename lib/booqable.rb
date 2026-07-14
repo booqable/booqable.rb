@@ -6,6 +6,7 @@ require "faraday/retry"
 require "json"
 require "sawyer"
 require "sawyer/link_parsers/simple"
+require "cgi"
 
 # Internal
 require_relative "booqable/version"
