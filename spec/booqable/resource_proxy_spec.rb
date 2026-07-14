@@ -193,7 +193,9 @@ describe Booqable::ResourceProxy do
         expect(orders).to be_an(Array)
         expect(orders.length).to be > 0
         order = orders.first
-        if order.customer
+        # Hash-style access is the lenient probe: this cassette's list payload
+        # has no customer key, and a strict read would raise MissingAttribute.
+        if order[:customer]
           expect(order.customer).not_to be_an(Array)
           expect(order.customer).to respond_to(:id)
           expect(order.customer).to respond_to(:name)

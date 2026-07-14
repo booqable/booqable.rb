@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+- **Breaking:** reading an attribute that is absent from an API payload now
+  raises `Booqable::MissingAttribute` (a `NoMethodError` subclass) instead of
+  silently returning nil.
 - Support Ruby 4.0
 
 ## [1.2.1] - 2026-06-10
