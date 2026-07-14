@@ -1,9 +1,13 @@
-## [Unreleased]
+## [2.0.0] - 2026-07-14
 
 - **Breaking:** reading an attribute that is absent from an API payload now
   raises `Booqable::MissingAttribute` (a `NoMethodError` subclass) instead of
   silently returning nil.
 - Support Ruby 4.0
+- Require `cgi` and declare it as a runtime dependency. Fixes
+  `undefined method 'parse' for class CGI` when handling `invalid_grant`
+  OAuth errors in apps that don't load the full cgi library themselves
+  (e.g. Rails 8.1+, which only loads `cgi/escape`).
 
 ## [1.2.1] - 2026-06-10
 
