@@ -184,6 +184,11 @@ module Booqable
         # Handle multiple relationships (to-many)
         elsif relationship_data.is_a?(Array)
           hash[key] = relationship_data
+        # An explicitly null to-one relationship ("data": null) is present-with-null, not
+        # absent: keep the key so strict reads answer nil instead of raising
+        # Booqable::MissingAttribute (see Booqable::StrictAttributes).
+        elsif relationship_data.nil?
+          hash[key] = nil
         end
       end
 
