@@ -1,4 +1,4 @@
-## [Unreleased]
+## [2.0.1] - 2026-07-16
 
 - Fix: a to-one relationship serialized with `"data": null` (e.g. a charge
   line's `item`, or an included `barcode` on a product without one) now reads
