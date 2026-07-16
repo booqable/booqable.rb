@@ -94,6 +94,29 @@ describe Booqable::StrictAttributes do
     end
   end
 
+  describe "reading a to-one relationship serialized with null data" do
+    let(:payload) do
+      {
+        "data" => {
+          "id" => "line-1",
+          "type" => "lines",
+          "attributes" => { "quantity" => 1 },
+          "relationships" => { "item" => { "data" => nil } }
+        }
+      }
+    end
+
+    # "data": null is present-with-null, exactly like a null attribute — the line HAS no item
+    # (e.g. a charge line). Dropping the key would turn that into a MissingAttribute raise.
+    it "returns nil instead of raising MissingAttribute" do
+      expect(resource.item).to be_nil
+    end
+
+    it "returns false for predicate-style reads" do
+      expect(resource.item?).to be(false)
+    end
+  end
+
   describe "Sawyer machinery that must keep working" do
     it "keeps to_h / to_attrs working" do
       expect(resource.to_h).to include(id: "order-123", status: "reserved", customer: nil)
