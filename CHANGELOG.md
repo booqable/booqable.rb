@@ -1,5 +1,6 @@
-## [2.0.1] - 2026-07-16
+## [2.1.0] - 2026-07-16
 
+- Add the `app_issues` resource (CRUD for `App::Issue`).
 - Fix: a to-one relationship serialized with `"data": null` (e.g. a charge
   line's `item`, or an included `barcode` on a product without one) now reads
   as nil, matching the present-with-null attribute semantics — instead of the
