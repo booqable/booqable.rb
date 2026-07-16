@@ -1,3 +1,10 @@
+## [Unreleased]
+
+- Fix: a to-one relationship serialized with `"data": null` (e.g. a charge
+  line's `item`, or an included `barcode` on a product without one) now reads
+  as nil, matching the present-with-null attribute semantics — instead of the
+  parser dropping the key and the read raising `Booqable::MissingAttribute`.
+
 ## [2.0.0] - 2026-07-14
 
 - **Breaking:** reading an attribute that is absent from an API payload now
