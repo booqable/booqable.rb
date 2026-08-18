@@ -15,6 +15,12 @@ module Booqable
       #     read_token: -> { stored_token },
       #     write_token: ->(token) { store_token(token) }
       class OAuth < Base
+        # Refresh the token this many seconds before it actually expires. A
+        # request sent in the last moment of a token's life can still be
+        # rejected once network latency or clock skew pushes it past the
+        # expiry boundary server-side.
+        REFRESH_BUFFER_SECONDS = 60
+
         # Initialize the OAuth authentication middleware
         #
         # @param app [#call] The next middleware in the Faraday stack
@@ -48,9 +54,9 @@ module Booqable
 
         # Process the HTTP request and add OAuth authentication
         #
-        # Retrieves the stored access token, refreshes it if expired, and adds
-        # it to the Authorization header. Then passes the request to the next
-        # middleware in the stack.
+        # Retrieves the stored access token, refreshes it if it is expired or
+        # about to expire, and adds it to the Authorization header. Then
+        # passes the request to the next middleware in the stack.
         #
         # @param env [Faraday::Env] The request environment
         # @return [Faraday::Response] The response from the next middleware
@@ -58,7 +64,7 @@ module Booqable
           around_refresh_token do
             @token = @client.get_access_token_from_hash(@read_token.call)
 
-            if @token.expired? || @token.expires_at.nil?
+            if expires_soon?(@token)
               @token = refresh_token!
             end
           end
@@ -69,6 +75,14 @@ module Booqable
         end
 
         private
+
+        # Whether the token expires within the buffer, or has no usable
+        # expiry. expires_at may be an Integer epoch (OAuth2) or a Time
+        # (e.g. an ActiveRecord datetime handed back by read_token), so
+        # coerce it.
+        def expires_soon?(token)
+          token.expires_at.nil? || Time.now.to_i >= token.expires_at.to_i - REFRESH_BUFFER_SECONDS
+        end
 
         # Yield to the configured around-callback, if any
         #

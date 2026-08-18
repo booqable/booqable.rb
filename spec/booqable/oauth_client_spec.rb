@@ -306,7 +306,7 @@ describe Booqable::OAuthClient do
         )
 
         old_oauth_token = double("OldAccessToken",
-          expired?: true,
+          expires_at: Time.now - 3600,
           refresh!: new_oauth_token
         )
 
@@ -406,7 +406,7 @@ describe Booqable::OAuthClient do
 
         # Mock OAuth2 error during refresh
         old_oauth_token = double("OldAccessToken",
-          expired?: true,
+          expires_at: Time.now - 3600,
           token: stored_token["access_token"]
         )
         oauth_error = OAuth2::Error.new(double("Response",

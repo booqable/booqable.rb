@@ -1,3 +1,11 @@
+## [Unreleased]
+
+- OAuth middleware: refresh the access token a short buffer
+  (`REFRESH_BUFFER_SECONDS`, 60s) before it expires, instead of only once it
+  has already expired. This fixes `Token is invalid` failures for requests
+  landing right at the token's expiry boundary, where network latency or clock
+  skew pushes an otherwise-valid token past expiry server-side.
+
 ## [2.1.0] - 2026-07-16
 
 - Add the `app_issues` resource (CRUD for `App::Issue`).
