@@ -367,12 +367,11 @@ describe Booqable::Client do
         mock_token = double("AccessToken",
           token: refreshed_token,
           refresh_token: "new_refresh_token",
-          expires_at: Time.now + 3600,
-          expired?: true,
+          expires_at: Time.now - 3600,
           to_hash: {
             "access_token" => refreshed_token,
             "refresh_token" => "new_refresh_token",
-            "expires_at" => Time.now + 3600
+            "expires_at" => Time.now - 3600
           })
 
         refreshed_mock_token = double("AccessToken",
@@ -394,6 +393,37 @@ describe Booqable::Client do
 
         assert_requested orders_request
         expect(stored_token).to eq(refreshed_mock_token.to_hash)
+      end
+
+      it "refreshes a token that is about to expire, before sending the request" do
+        # A token in its final seconds still looks valid here, but network
+        # latency or clock skew can push it past the expiry boundary by the
+        # time the server evaluates it. It must be refreshed early instead.
+        client = Booqable::Client.new(
+          company_id: "demo",
+          api_domain: "booqable.test",
+          client_id: test_client_id,
+          client_secret: test_client_secret,
+          write_token: ->(token) { },
+          read_token: -> {
+            {
+              access_token: test_access_token,
+              refresh_token: test_refresh_token,
+              expires_at: Time.now + 30 # not yet expired, but inside the buffer
+            }
+          }
+        )
+
+        refresh_request = stub_request(:post, booqable_url("/oauth/token"))
+          .to_return(status: 200,
+                     body: { access_token: "renewed_token", refresh_token: "new_refresh", expires_in: 7200, token_type: "bearer" }.to_json,
+                     headers: { "Content-Type" => "application/json" })
+        orders_request = stub_request(:get, booqable_url("/orders")).with(headers: { authorization: "Bearer renewed_token" })
+
+        client.get("/orders")
+
+        assert_requested refresh_request
+        assert_requested orders_request
       end
 
       it "wraps the read+check+refresh sequence in around_refresh_token when provided" do
@@ -428,8 +458,7 @@ describe Booqable::Client do
         mock_token = double("AccessToken",
           token: refreshed_token,
           refresh_token: "new_refresh_token",
-          expires_at: Time.now + 3600,
-          expired?: true,
+          expires_at: Time.now - 3600,
           to_hash: {})
         refreshed_mock_token = double("AccessToken",
           token: refreshed_token,
@@ -465,7 +494,7 @@ describe Booqable::Client do
         )
 
         # Mock the OAuth2 token refresh to fail
-        mock_token = double("AccessToken", expired?: true)
+        mock_token = double("AccessToken", expires_at: Time.now - 3600)
         oauth_error = OAuth2::Error.new("invalid_grant")
 
         # Mock the error response
@@ -507,7 +536,7 @@ describe Booqable::Client do
         )
 
         # Mock the OAuth2 token refresh to fail with invalid_grant (revoked token)
-        mock_token = double("AccessToken", expired?: true)
+        mock_token = double("AccessToken", expires_at: Time.now - 3600)
         oauth_error = OAuth2::Error.new("invalid_grant")
 
         # Mock the error response for revoked token (400 status with invalid_grant)
