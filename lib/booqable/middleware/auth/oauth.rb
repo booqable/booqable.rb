@@ -98,7 +98,10 @@ module Booqable
         #
         # Uses the refresh token to obtain a new access token and stores it
         # using the configured write_token proc. Converts OAuth2 errors to
-        # Booqable errors for consistent error handling.
+        # Booqable errors for consistent error handling. OAuth2 errors raised
+        # without an HTTP response (e.g. the stored token has no refresh
+        # token) carry a plain Hash and propagate as-is — there is no
+        # response to map to a Booqable error.
         #
         # @return [OAuth2::AccessToken] The new access token
         # @raise [Booqable::Error] For OAuth-related errors
@@ -109,9 +112,9 @@ module Booqable
 
           new_token
         rescue OAuth2::Error => e
-          response = e.response.response.env
+          raise unless e.response.respond_to?(:response)
 
-          Booqable::Error.from_response(response)
+          Booqable::Error.from_response(e.response.response.env)
         end
       end
     end
