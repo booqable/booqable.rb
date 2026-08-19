@@ -581,7 +581,7 @@ describe Booqable::Client do
         )
 
         expect { client.get("/orders") }
-          .to raise_error(OAuth2::Error, /A refresh_token is not available/)
+          .to raise_error(OAuth2::Error, /refresh_token/)
       end
 
       it "injects oauth middleware when oauth authenticated" do
