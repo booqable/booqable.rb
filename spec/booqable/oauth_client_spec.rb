@@ -441,6 +441,41 @@ describe Booqable::OAuthClient do
 
         expect { middleware.call(env) }.to raise_error(Booqable::Unauthorized)
       end
+
+      it "re-raises OAuth2 errors whose response carries no HTTP response" do
+        # Guard against error shapes where #response exists but holds nothing —
+        # there is no HTTP response to map, so the original error propagates.
+        stored_token = {
+          "access_token" => "old_token",
+          "refresh_token" => "refresh_token_123",
+          "expires_at" => Time.now - 3600
+        }
+
+        old_oauth_token = double("OldAccessToken",
+          expires_at: Time.now - 3600,
+          token: stored_token["access_token"]
+        )
+        oauth_error = OAuth2::Error.new(double("Response", response: nil))
+
+        allow(OAuth2::AccessToken).to receive(:from_hash).and_return(old_oauth_token)
+        allow(old_oauth_token).to receive(:refresh!).and_raise(oauth_error)
+
+        middleware = Booqable::Middleware::Auth::OAuth.new(
+          ->(env) { env },
+          client_id: test_client_id,
+          client_secret: test_client_secret,
+          api_endpoint: test_api_endpoint,
+          redirect_uri: test_redirect_uri,
+          read_token: -> { stored_token },
+          write_token: ->(token) { }
+        )
+
+        env = double("Environment")
+        allow(env).to receive(:request_headers).and_return({})
+        allow(env).to receive(:[]=)
+
+        expect { middleware.call(env) }.to raise_error(oauth_error)
+      end
     end
   end
 end

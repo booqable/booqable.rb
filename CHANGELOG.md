@@ -5,6 +5,10 @@
   has already expired. This fixes `Token is invalid` failures for requests
   landing right at the token's expiry boundary, where network latency or clock
   skew pushes an otherwise-valid token past expiry server-side.
+- Fix: a token refresh failing without an HTTP response (e.g. the stored token
+  has no refresh token) now raises the original `OAuth2::Error` instead of
+  crashing with `NoMethodError` while trying to map a response that isn't
+  there.
 
 ## [2.1.0] - 2026-07-16
 

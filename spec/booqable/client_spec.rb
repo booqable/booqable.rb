@@ -561,6 +561,55 @@ describe Booqable::Client do
         expect { client.get("/orders") }.to raise_error(Booqable::InvalidGrant)
       end
 
+      it "raises the OAuth2 error when a refresh fails without an HTTP response" do
+        # A stored token without a refresh token makes OAuth2 raise an error
+        # built from a plain Hash instead of an HTTP response — there is
+        # nothing to map to a Booqable error, so the OAuth2 error must
+        # propagate as-is (not crash with NoMethodError).
+        client = Booqable::Client.new(
+          company_id: "demo",
+          api_domain: "booqable.test",
+          client_id: test_client_id,
+          client_secret: test_client_secret,
+          write_token: ->(token) { },
+          read_token: -> {
+            {
+              access_token: test_access_token,
+              expires_at: Time.now - 3600 # expired, and no refresh_token to refresh with
+            }
+          }
+        )
+
+        expect { client.get("/orders") }
+          .to raise_error(OAuth2::Error, /refresh_token/)
+      end
+
+      it "raises the OAuth2 error when a refresh response maps to no Booqable error" do
+        # A 200 from the token endpoint without an access token makes OAuth2
+        # raise an error whose response maps to no Booqable error class
+        # (only 4xx/5xx do). The original error must propagate instead of the
+        # refresh silently returning nil and crashing later on the nil token.
+        client = Booqable::Client.new(
+          company_id: "demo",
+          api_domain: "booqable.test",
+          client_id: test_client_id,
+          client_secret: test_client_secret,
+          write_token: ->(token) { },
+          read_token: -> {
+            {
+              access_token: test_access_token,
+              refresh_token: test_refresh_token,
+              expires_at: Time.now - 3600
+            }
+          }
+        )
+
+        stub_request(:post, booqable_url("/oauth/token"))
+          .to_return(status: 200, body: "{}", headers: { "Content-Type" => "application/json" })
+
+        expect { client.get("/orders") }.to raise_error(OAuth2::Error)
+      end
+
       it "injects oauth middleware when oauth authenticated" do
         client = Booqable::Client.new(
           company_id: "demo",
