@@ -13,7 +13,7 @@ end
 
 group :test do
   gem "rspec", "~> 3.13"
-  gem "simplecov", "~> 0.22.0"
+  gem "simplecov", "~> 1.0.3"
   gem "simplecov_json_formatter", "~> 0.1.4"
 end
 
