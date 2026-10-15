@@ -7,13 +7,13 @@ gemspec
 
 group :development do
   gem "rake", "~> 13.4"
-  gem "rubocop", "~> 1.88"
+  gem "rubocop", "~> 1.90"
   gem "rubocop-37signals", github: "basecamp/house-style", require: false
 end
 
 group :test do
   gem "rspec", "~> 3.13"
-  gem "simplecov", "~> 1.0.3"
+  gem "simplecov", "~> 1.1.1"
   gem "simplecov_json_formatter", "~> 0.1.4"
 end
 
