@@ -1,4 +1,4 @@
-## [Unreleased]
+## [2.2.0] - 2026-11-03
 
 - OAuth middleware: refresh the access token a short buffer
   (`REFRESH_BUFFER_SECONDS`, 60s) before it expires, instead of only once it
@@ -9,6 +9,9 @@
   has no refresh token) now raises the original `OAuth2::Error` instead of
   crashing with `NoMethodError` while trying to map a response that isn't
   there.
+- Require `multi_json` >= 1.21.2, the first release compatible with the
+  `json` 3.x gem. Older versions raise `ArgumentError` on every parse under
+  json 3.
 
 ## [2.1.0] - 2026-07-16
 
